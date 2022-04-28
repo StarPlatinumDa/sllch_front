@@ -1,5 +1,11 @@
 # sllch_front
 
+#安装依赖
+npm install
+
+#跑项目
+npm run dev:h5
+
 ## Project setup
 ```
 npm install
