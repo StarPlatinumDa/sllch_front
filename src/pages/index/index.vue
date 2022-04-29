@@ -1,8 +1,10 @@
 <template>
 	<view>
-		<view>
-			<image></image>
+		<div style="height: 10vh;"></div>
+		<view id="logo">
+			<image id="logo-img" src="../../static/logo2.png"></image>
 		</view>
+		<div style="height: 10vh;"></div>
 		<view id="login">
 			<input id="username" class="input-area" placeholder="输入用户名" maxlength=20 />
 			<div style="height: 1.5vh;"></div>
@@ -36,6 +38,14 @@
 </script>
 
 <style>	
+	#logo {
+		display: flex;
+		justify-content: center;
+	}
+	#logo-img {
+		width: 60%;
+		height: 30vw;
+	}
 	.input-area {
 		width: 65%;
 		height: 60px;
