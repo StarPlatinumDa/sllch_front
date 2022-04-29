@@ -1,66 +1,75 @@
 <template>
-  <view class="content">
-    <view>
-      <text>登陆页面</text>
-      <el-row>
-        <el-button type="primary" v-on:click="tohome">跳转到首页</el-button>
-      </el-row>
-      <h1>{{ userName }}</h1>
-    </view>
-  </view>
+	<view>
+		<div style="height: 10vh;"></div>
+		<view id="logo">
+			<image id="logo-img" src="../../static/logo2.png"></image>
+		</view>
+		<div style="height: 10vh;"></div>
+		<view id="login">
+			<input id="username" class="input-area" placeholder="输入用户名" maxlength=20 />
+			<div style="height: 1.5vh;"></div>
+			<input id="password" class="input-area" placeholder="输入密码" maxlength=25 password="true"/>
+			<!-- <checkbox-gro<!-- up>
+				<checkbox id="autologin">自动登录</checkbox>
+			</checkbox-group> -->
+			<div style="height: 5vh;"></div>
+			<button @click="tohome">
+				&rarr;
+			</button>
+		</view>
+	</view>
 </template>
 
 <script>
-import {
-  mapState
-} from 'vuex'
-// import store from "@/store/index";
-
-export default {
-  data() {
-    return {
-      test: 'aaa'
-    }
-  },
-  computed: {
-    ...mapState([
-      'forcedLogin',
-      'hasLogin',
-      'userName',//映射 this.userName 为 store.state.userName
-      'userId',
-    ]),
-  },
-  onLoad() {
-    if (!this.hasLogin) {
-      uni.showModal({
-        title: '未登录',
-        content: '您未登录，需要登录后才能继续',
-        showCancel: !this.forcedLogin,
-        success: (result => {
-          if (result.confirm) {
-            if (this.forcedLogin) {
-              uni.reLaunch({
-                url: '/pages/index/index'
-              })
-            } else {
-              uni.navigateTo({
-                url: '/pages/index/index'
-              })
-            }
-          }
-        })
-      })
-    }
-  },
-  methods: {
-    tohome: function () {
-      uni.switchTab({
-        url: '/pages/home/index'
-      })
-    }
-  }
-}
+	export default {
+		data() {
+			return {
+				autologin: false
+			}
+		},
+		methods: {
+			tohome: function() {
+				uni.switchTab({
+					url:'/pages/home/index'
+				})
+			}
+		}
+	}
 </script>
 
-<style>
+<style>	
+	#logo {
+		display: flex;
+		justify-content: center;
+	}
+	#logo-img {
+		width: 60%;
+		height: 30vw;
+	}
+	.input-area {
+		width: 65%;
+		height: 60px;
+		margin: auto;
+		background-color: #f2f3f7;
+		padding: 0px;
+		border-radius: 45px;
+		text-align: center; 
+	}
+	
+	button {
+		height: 80px;
+		line-height: 80px;  
+		width: 80px;  
+		font-size: 1em;
+		font-weight: bold;
+		border-radius: 50%;
+		background-color: #5a9cf8;/* #4CAF50 */
+	    color: white;
+		text-align: center;
+		cursor: pointer;
+	}
+	
+	#autologin {
+		margin: auto;
+	}
 </style>
