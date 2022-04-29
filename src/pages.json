@@ -30,7 +30,19 @@
 				"navigationStyle":"custom"  
 			}
 		}
-	],
+	    ,{
+            "path" : "pages/404/404",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "页面未找到",
+                "enablePullDownRefresh": false,
+				"app-plus": {
+					"titleNView": false
+				}
+            }
+            
+        }
+    ],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
 		"navigationBarTitleText": "uni-app",
