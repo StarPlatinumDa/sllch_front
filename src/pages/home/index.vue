@@ -13,14 +13,14 @@
 			}
 		},
 		onLoad() {
-	
+
 		},
 		methods: {
-	
+
 		}
 	}
 </script>
 
 <style>
-	
+
 </style>

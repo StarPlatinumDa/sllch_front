@@ -9,6 +9,7 @@ const store = new Vuex.Store({
         userName: 'xiaomei',
         userId: '111',
         token: '',
+        password: '123456',
     },
     mutations: {
         login(state, user) {
@@ -24,13 +25,13 @@ const store = new Vuex.Store({
         }
     },
     actions: {},
-    getters: {
-        userId(state, getters) {
-            return state.userId
-        },
-        userName(state, getters) {
-            return state.userName
-        },
-    }
+    // getters: {
+    //     userId(state, getters) {
+    //         return state.userId
+    //     },
+    //     userName(state, getters) {
+    //         return state.userName
+    //     },
+    // }
 })
 export default store
