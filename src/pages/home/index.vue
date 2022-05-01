@@ -3,6 +3,15 @@
 		<view>
 			<text>首页</text>
 		</view>
+		<view>
+			<div style="height: 40vh;"></div>
+			<navigator url="/pages/home/confirm">
+				<button>
+					go
+				</button>	
+			</navigator>
+
+		</view>
 	</view>
 </template>
 
@@ -16,11 +25,14 @@
 	
 		},
 		methods: {
-	
+			
 		}
 	}
 </script>
 
 <style>
-	
+	.button {
+		display:block;
+		width: 80%;
+	}
 </style>
