@@ -22,17 +22,12 @@
 			}
 		},
 		onLoad() {
-	
+
 		},
 		methods: {
-			
 		}
 	}
 </script>
 
 <style>
-	.button {
-		display:block;
-		width: 80%;
-	}
 </style>

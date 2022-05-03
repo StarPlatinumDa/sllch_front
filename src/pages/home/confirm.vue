@@ -69,6 +69,7 @@
 </template>
 
 <script>
+	import uploadImage from "../../js_sdk/yushijie-ossutil/ossutil/uploadFile.js"
 	export default {
 		data() {
 			return {
@@ -94,7 +95,14 @@
 					}
 				});
 			},
-			dialogConfirm() {
+			dialogConfirm() {				
+				uploadImage('../../static/logo.png', 'images/',
+				result => {
+					console.log("it's ok!");
+				},
+				result => {
+					console.log("it's fail!");
+				})
 				console.log(this.level + this.location + this.comment);
 			},
 			submit() {
