@@ -3,7 +3,7 @@
 		"autoscan": true,
 		"custom": {
 			// uni-ui 规则如下配置
-			"^uni-((?!(shadow-root|icons)).*)": "@dcloudio/uni-ui/lib/uni-$1/uni-$1.vue"
+			"^uni-((?!(shadow-root|icons)).*)": "@dcloudio/uni-ui/lib/uni-$1/uni-$1.vue" //这里排除了uni-shadow-root，uni-icons  
 		}
 	},
 	"pages": [ //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages	

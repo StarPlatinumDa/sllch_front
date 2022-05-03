@@ -1,36 +1,69 @@
 <template>
 	<view>
-		<text>skdjf</text>
 		<view>
 			<image></image>
 		</view>
-<!-- 		<view>
-			<el-form :label-position="left">
-				<el-form-item label="病害等级">
-					<el-select v-model="level" placeholder="请选择">
-						<el-option label="1级病害" value=1></el-option>
-						<el-option label="2级病害" value=2></el-option>
-						<el-option label="3级病害" value=3></el-option>
-					</el-select>
-				</el-form-item>
-				<el-form-item label="桥梁位置">
-					<el-input v-model="location" placeholder="位置信息" suffix-icon="el-icon-location-information" :disabled="true"></el-input>
-				</el-form-item>
-				<el-form-item label="备注信息">
-					<el-input v-model="comment" placeholder="可为空"></el-input>
-				</el-form-item>
-				<el-form-item>
-					<el-button type="primary" round>确认添加</el-button>
-				</el-form-item>
-			</el-form>
-		</view> -->
 		<view>
-			<uni-calendar 
-			:insert="true"
-			:lunar="true" 
-			:start-date="'2019-3-2'"
-			:end-date="'2019-5-20'"
-			 />
+			<uni-row>
+				<uni-col :offset="2">
+					<text>病害等级</text>
+				</uni-col>
+			</uni-row>
+			<uni-row>
+				<uni-col :offset="2">
+					<uni-data-checkbox v-model="level" :localdata="range"></uni-data-checkbox>
+				</uni-col>
+			</uni-row>
+			<div style="height: 1vh;"></div>
+			<uni-row>
+				<uni-col :offset="2">
+					<text>桥梁位置</text>
+				</uni-col>
+			</uni-row>
+			<div style="height: 1vh;"></div>
+			<uni-row>
+				<uni-col :offset="2">
+					<uni-easyinput
+					suffixIcon="location-filled"  
+					v-model="location" 
+					placeholder="点击右侧图标可自动获取位置信息" 
+					@iconClick="clickicon"
+					style="width: 85vw;"></uni-easyinput>
+				</uni-col>
+			</uni-row>
+			<div style="height: 2vh;"></div>
+			<uni-row>
+				<uni-col :offset="2">
+					<text>备注信息</text>
+				</uni-col>
+			</uni-row>
+			<div style="height: 1vh;"></div>
+			<uni-row>
+				<uni-col :offset="2">
+					<uni-easyinput 
+					v-model="comment" 
+					placeholder="可为空"
+					style="width: 85vw;"></uni-easyinput>
+				</uni-col>
+			</uni-row>
+			<div style="height: 2vh;"></div>
+			<uni-row>
+				<uni-col :offset="2">
+					<button type="primary" style="width: 85vw; margin: 0" @click="submit">确认提交</button>
+				</uni-col>
+			</uni-row>
+		</view>
+		<view>
+			<uni-popup ref="popup" type="dialog">
+				<uni-popup-dialog 
+				ref="dialog"  
+				type="warn"
+				title="确认添加吗？" 
+				content="添加后将无法自行修改!"
+				confirmText="添加"
+				cancelText="取消"
+				@confirm="dialogConfirm"></uni-popup-dialog>
+			</uni-popup>
 		</view>
 	</view>
 </template>
@@ -39,26 +72,38 @@
 	export default {
 		data() {
 			return {
-				level: "",
+				level: 1,
 				location: "",
 				comment: "",
+				range: [{"value": 1,"text": "1级病害"},{"value": 2,"text": "2级病害"},{"value": 3,"text": "3级病害"}]
 			}
 		},
 		methods: {
-			
+			clickicon() {
+				console.log('clickon');
+				let that = this;
+				uni.getLocation({
+					type: 'gcj02',
+					geocode: true,
+					success: function (res) {
+						// console.log(res.address['provice'])
+						that.location = res.address['city'] 
+										+ res.address['district']
+										+ res.address['street']
+										+ res.address['streetNum'];
+					}
+				});
+			},
+			dialogConfirm() {
+				console.log(this.level + this.location + this.comment);
+			},
+			submit() {
+				this.$refs.popup.open();
+			}
 		}
 	}
 </script>
 
 <style>
-/* 	.el-input {
-		display:block;
-		width: 80%;
-		margin: auto;
-	}
-	.el-button {
-		display:block;
-		width: 80%;
-		margin: auto;
-	} */
+
 </style>
