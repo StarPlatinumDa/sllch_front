@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+// import user from './modules/user'
 
 Vue.use(Vuex)
 const store = new Vuex.Store({
@@ -9,19 +10,25 @@ const store = new Vuex.Store({
         userName: 'xiaomei',
         userId: '111',
         token: '',
+        permissionLevel: '2',
         password: '123456',
     },
     mutations: {
         login(state, user) {
+            state.hasLogin = true
             state.userName = user.userName || '';
             state.userId = user.userId || '';
             state.token = user.token || '';
+			state.permissionLevel=user.permissionLevel||'';
         },
         logout(state) {
-            state.userName = "";
             state.hasLogin = false;
+            state.userName = "";
             state.userId = '';
             state.token = '';
+            uni.removeStorage({
+                key:'userInfo'
+            })
         }
     },
     actions: {},
