@@ -1,42 +1,58 @@
 <template>
 	<view class="content">
-		<view style="margin-top: 60rpx; padding: 20rpx;">
-			<uni-row class="demo-uni-row" gutter=20>
-				<uni-col :span="20">
+		<view style="margin-top: 60rpx; padding: 30rpx;">
+			<uni-row class="demo-uni-row" :gutter="20">
+				<uni-col :span="21">
 					<uni-easyinput 
 					v-model="input" 
 					placeholder="请输入检索文本" />
 				</uni-col>
-				<uni-col :span="4">
-					<view class="demo-uni-col light"></view>
+				<uni-col :span="3">
+					<uni-icons type="image" size="30"></uni-icons>
 				</uni-col>
 			</uni-row>
-			<uni-row class="demo-uni-row">
+			<uni-row class="demo-uni-row" :gutter="20">
 				<uni-col :span="12">
-					<view class="demo-uni-col dark"></view>
+					<drap-box
+					:choiceIndex="defaultType"
+					:choiceList="diseaseType"
+					@returnDat='returnType'
+					></drap-box>
 				</uni-col> 
 				<uni-col :span="12">
-					<view class="demo-uni-col light"></view>
+					<drap-box
+					:choiceIndex = "defaultLevel"
+					:choiceList="levels"
+					@returnDat='returnLevel'
+					></drap-box>
 				</uni-col>
 			</uni-row>
-			<uni-row class="demo-uni-row">
-				<uni-col :span="12">
-					<view class="demo-uni-col dark"></view>
+			<uni-row class="demo-uni-row" :gutter="20">
+				<uni-col :span="11">
+					<view class="example-body">
+						<uni-datetime-picker type="date" :clear-icon="false" v-model="beginTime" />
+					</view>
 				</uni-col>
-				<uni-col :span="12">
-					<view class="demo-uni-col light"></view>
+				<uni-col :span="2"> — </uni-col>
+				<uni-col :span="11">
+					<view class="example-body">
+						<uni-datetime-picker type="date" :clear-icon="false" v-model="endTime" />
+					</view>
 				</uni-col>
 			</uni-row>
 			<uni-row class="demo-uni-row">
 				<uni-col :span="24">
-					<button type="primary">搜索</button>
+					<button 
+					type="primary"
+					@click="searching"
+					>搜索</button>
 				</uni-col>
 			</uni-row>
 		</view>
 		<view id='imgs'>
 			<img 
 			  style=" width: 32%;height: 130px;padding: 2px;"
-			  v-for="composingImg in composingImgs" 
+			  v-for="(composingImg, index) in composingImgs" 
 			  :src="composingImg.image_src"
 			  v-on:click="toPictureDetail(composingImg)"
 			  alt="无法显示图片">
@@ -45,11 +61,16 @@
 </template>
 
 <script>
+	import drapBox from '@/components/drap-box/drap-box.vue';
 	export default {
+		components:{
+			drapBox
+		},
 		data() {
 			return {
 				input:'',
-				types: [{
+				defaultType:'病害类型',
+				diseaseType: [{
 				  value: '裂缝',
 				  label: '裂缝'
 				}, {
@@ -62,7 +83,7 @@
 				  value: '渗水',
 				  label: '渗水'
 				}],
-				type: '',
+				defaultLevel: '图片等级',
 				levels: [{
 					value: 1 ,
 					label: '等级1'
@@ -76,74 +97,9 @@
 					value: 4,
 					label: '等级4'
 				}],
-				level:'',
 				beginTime:'',
 				endTime:'',
 				composingImgs:[{
-					image_id:1,
-					image_typeid:1,
-					image_src:'static/composing/2.jpg',
-					image_createtime:'2022-11-01',
-					image_isdelete:1,
-					image_remarks:'无',
-					user_id:1
-				},{
-					image_id:1,
-					image_typeid:1,
-					image_src:'static/composing/3.jpg',
-					image_createtime:'2022-11-01',
-					image_isdelete:1,
-					image_remarks:'无',
-					user_id:1
-				},{
-					image_id:1,
-					image_typeid:1,
-					image_src:'static/composing/10.jpg',
-					image_createtime:'2022-11-01',
-					image_isdelete:1,
-					image_remarks:'无',
-					user_id:1
-				},{
-					image_id:1,
-					image_typeid:1,
-					image_src:'static/composing/13.jpg',
-					image_createtime:'2022-11-01',
-					image_isdelete:1,
-					image_remarks:'无',
-					user_id:1
-				},{
-					image_id:1,
-					image_typeid:1,
-					image_src:'static/composing/2.jpg',
-					image_createtime:'2022-11-01',
-					image_isdelete:1,
-					image_remarks:'无',
-					user_id:1
-				},{
-					image_id:1,
-					image_typeid:1,
-					image_src:'static/composing/10.jpg',
-					image_createtime:'2022-11-01',
-					image_isdelete:1,
-					image_remarks:'无',
-					user_id:1
-				},{
-					image_id:1,
-					image_typeid:1,
-					image_src:'static/composing/13.jpg',
-					image_createtime:'2022-11-01',
-					image_isdelete:1,
-					image_remarks:'无',
-					user_id:1
-				},{
-					image_id:1,
-					image_typeid:1,
-					image_src:'static/composing/3.jpg',
-					image_createtime:'2022-11-01',
-					image_isdelete:1,
-					image_remarks:'无',
-					user_id:1
-				},{
 					image_id:1,
 					image_typeid:1,
 					image_src:'static/composing/2.jpg',
@@ -159,7 +115,20 @@
 	
 		},
 		methods: {
-	
+			toPictureDetail: function() {
+				uni.navigateTo({
+					url:"/pages/photo/imgdetail"
+				})
+			},
+			returnType(val){
+				this.defaultType = val
+			},
+			returnLevel(val){
+				this.defaultLevel = val
+			},
+			searching(){
+				console.log(this.input, this.defaultType, this.defaultLevel, this.beginTime, this.endTime)
+			}
 		}
 	}
 </script>
@@ -167,35 +136,10 @@
 <style>
 	.demo-uni-row {
 		margin-bottom: 10px;
-		/* QQ、字节小程序文档写有 :host，但实测不生效 */
-		/* 百度小程序没有 :host，需要设置block */
-		/* #ifdef MP-TOUTIAO || MP-QQ || MP-BAIDU */
 		display: block;
-		/* #endif */
 	}
 	
-	/* 支付宝小程序没有 demo-uni-row 层级 */
-	/* 微信小程序使用了虚拟化节点，没有 demo-uni-row 层级 */
-	/* #ifdef MP-ALIPAY || MP-WEIXIN */
 	/deep/ .uni-row {
 		margin-bottom: 10px;
-	}
-	/* #endif */
-	
-	.demo-uni-col {
-		height: 36px;
-		border-radius: 4px;
-	}
-	
-	.dark_deep {
-		background-color: #99a9bf;
-	}
-	
-	.dark {
-		background-color: #d3dce6;
-	}
-	
-	.light {
-		background-color: #e5e9f2;
 	}
 </style>
