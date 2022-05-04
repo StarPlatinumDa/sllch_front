@@ -5,13 +5,14 @@ import Vuex from 'vuex'
 Vue.use(Vuex)
 const store = new Vuex.Store({
     state: {
-        forcedLogin: false,//是否强制登陆
+        forcedLogin: true,//是否强制登陆
         hasLogin: false,
         userName: 'xiaomei',
         userId: '111',
         token: '',
         permissionLevel: '2',
         password: '123456',
+        frontUrl:'http://localhost:8080'
     },
     mutations: {
         login(state, user) {

@@ -25,11 +25,10 @@
           <text class="text">{{ permissionLevel }}级权限</text>
         </uni-grid-item>
       </uni-grid>
-
     </view>
     <br>
     <view>
-      <uni-grid :column="2" :showBorder="false" :square="false">
+      <uni-grid :column="1" :showBorder="false" :square="false">
         <uni-grid-item>
           <view class="vcenter">
             <text class="text">历史记录</text>
@@ -41,7 +40,7 @@
     <!--    要把flex写在for外面-->
     <view class="img">
       <view v-for="item in imglist" :key="item.id">
-        <image class="innerimage" :src="item.src"></image>
+        <image class="innerimage" :src="item.src" mode="aspectFill" @click="previewImage(item.src)"></image>
       </view>
     </view>
 
@@ -54,14 +53,15 @@
       </uni-popup>
     </view>
 
+    <view style="height: 50px;">
+
+    </view>
+
 
     <view class="bottomview">
       <button class="btn" @click="thisLogout">
-        <!--        <span id="ripple" ref="ripple" :style="showripple ? '' : 'display:none;'"></span>-->
         退出登录
       </button>
-      <!--      <a href="javascript:void(0)" onclick="logout()">修改</a>-->
-      <!--      <text class="btn" onclick="logout()">退出登录</text>-->
     </view>
 
 
@@ -80,26 +80,27 @@ export default {
       msgType: 'error',
       showripple: false,
       name: 'xiaomei',
-      imglist: [{
-        'src': '../../static/logo2.png',
-        'id': 1
-      }, {
-        'src': '../../static/logo2.png',
-        'id': 2
-      }, {
-        'src': '../../static/logo2.png',
-        'id': 3
-      }, {
-        'src': '../../static/logo2.png',
-        'id': 4
-      }]
+      // imglist: [{
+      //   'src': '../../static/img/404.png',
+      //   'id': 1
+      // }, {
+      //   'src': '../../static/img/404.png',
+      //   'id': 2
+      // }, {
+      //   'src': '../../static/img/404.png',
+      //   'id': 3
+      // }, {
+      //   'src': '../../static/img/404.png',
+      //   'id': 4
+      // }]
+      imglist: []
     }
   },
-  onLoad() {
-
+  onShow() {
+    this.getImageList()
   },
   computed: {
-    ...mapState(['forcedLogin', 'hasLogin', 'userName', 'userId', 'password', 'permissionLevel']),
+    ...mapState(['forcedLogin', 'hasLogin', 'userName', 'userId', 'permissionLevel', 'token', 'frontUrl']),
 
   },
   methods: {
@@ -130,14 +131,48 @@ export default {
 
       uni.navigateTo({
         url: '/pages/index/index',
-        success: () => {
-          //onshow失灵，所以手动调用
-          beforePage.onshow()
-        }
+        // success: () => {
+        //   //onshow失灵，所以手动调用
+        //   beforePage.onshow()
+        // }
       })
       // this.messageText = `点击确认了 ${this.msgType} 窗口`
       // this.$refs.message.open()
     },
+    previewImage(src) {
+      console.log('image')
+      console.log(src)
+      let array = []
+      array.push(src)
+      uni.previewImage({
+        urls: array,
+        current: array[0]
+      })
+    },
+    getImageList() {
+      new Promise((resolve, reject) => {
+        uni.request({
+          url: this.frontUrl + '/imageInfo/imagemanage/list',
+          method: 'GET',
+          header: {
+            'Authorization': this.token
+          },
+          success: (res) => {
+            console.log('imgdata')
+            let list = res.data.rows
+            console.log(res.data.rows[0].imageSrc)
+            this.imglist = []
+            for (let i = 0; i < list.length; i++) {
+              this.imglist.push({
+                src: list[i].imageSrc,
+                id: i
+              })
+            }
+
+          }
+        })
+      })
+    }
 
 
   }
@@ -162,14 +197,27 @@ export default {
   flex-wrap: wrap;
   justify-content: space-around;
   align-items: flex-start;
+  /*height: 300px;*/
+  overflow: auto;
+
+}
+
+.img:after {
+  content: none;
+  flex: auto;
 }
 
 .innerimage {
-  height: 100px;
+  margin: 10px;
+  display: flex;
+  overflow-x: auto;
+  overflow-y: hidden;
+  /*float: left;*/
+  height: 150px;
   width: 150px;
   border-radius: 27px;
-  background-repeat: no-repeat;
-  background-position: center center;
+
+
 }
 
 .bottomview {

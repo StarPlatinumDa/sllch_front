@@ -17,6 +17,7 @@
       <button @click="checkPass" v-bind:disabled="isLogin">
         &rarr;
       </button>
+
     </view>
 
     <view>
@@ -46,27 +47,27 @@ export default {
     }
   },
   onShow() {
+
     this.account = ''
     this.curpass = ''
-    console.log('????????')
     if (!this.hasLogin) {
       uni.showModal({
         title: '未登录',
         content: '您未登录，需要登陆后才能继续',
         showCancel: !this.forcedLogin,
-        success: (result => {
-          if (result.confirm) {
-            if (this.forcedLogin) {
-              uni.reLaunch({
-                url: '/pages/index/index'
-              })
-            } else {
-              uni.navigateTo({
-                url: '/pages/index/index'
-              })
-            }
-          }
-        })
+        // success: (result => {
+        //   if (result.confirm) {
+        //     if (this.forcedLogin) {
+        //       uni.reLaunch({
+        //         url: '/pages/index/index'
+        //       })
+        //     } else {
+        //       // uni.navigateTo({
+        //       //   url: '/pages/index/index'
+        //       // })
+        //     }
+        //   }
+        // })
       })
     } else {
       console.log('我服了')
@@ -79,7 +80,7 @@ export default {
     }
   },
   computed: {
-    ...mapState(['forcedLogin', 'hasLogin', 'userName', 'userId', 'token', 'permissionLevel']),
+    ...mapState(['forcedLogin', 'hasLogin', 'userName', 'userId', 'token', 'permissionLevel', 'frontUrl']),
     isLogin() {
       let flag = true
       if (this.account && this.curpass) {
@@ -104,7 +105,7 @@ export default {
         new Promise((resolve) => {
           //请求登陆
           uni.request({
-            url: 'http://localhost:8080/mobilelogin',
+            url: this.frontUrl + '/mobilelogin',
             method: 'POST',
             header: {
               'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
@@ -143,7 +144,7 @@ export default {
         }).then((res) => {
           //获取登陆信息
           uni.request({
-            url: 'http://localhost:8080/system/user/profile',
+            url: this.frontUrl + '/system/user/profile',
             method: 'GET',
             header: {
               'Authorization': this.temptoken
