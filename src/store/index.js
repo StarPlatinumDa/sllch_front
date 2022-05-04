@@ -5,13 +5,14 @@ import Vuex from 'vuex'
 Vue.use(Vuex)
 const store = new Vuex.Store({
     state: {
-        forcedLogin: false,//是否强制登陆
+        forcedLogin: true,//是否强制登陆
         hasLogin: false,
         userName: 'xiaomei',
         userId: '111',
         token: '',
         permissionLevel: '2',
         password: '123456',
+        frontUrl:'http://localhost:8080'
     },
     mutations: {
         login(state, user) {
@@ -19,15 +20,16 @@ const store = new Vuex.Store({
             state.userName = user.userName || '';
             state.userId = user.userId || '';
             state.token = user.token || '';
-			state.permissionLevel=user.permissionLevel||'';
+            state.permissionLevel = user.permissionLevel || '';
         },
         logout(state) {
             state.hasLogin = false;
             state.userName = "";
             state.userId = '';
             state.token = '';
+            state.permissionLevel = '';
             uni.removeStorage({
-                key:'userInfo'
+                key: 'token'
             })
         }
     },
