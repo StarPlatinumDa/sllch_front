@@ -115,9 +115,9 @@
 	
 		},
 		methods: {
-			toPictureDetail: function() {
+			toPictureDetail: function(composingImg) {
 				uni.navigateTo({
-					url:"/pages/photo/imgdetail"
+					url:`/pages/photo/imgdetail?imgdtail=${composingImg}`
 				})
 			},
 			returnType(val){

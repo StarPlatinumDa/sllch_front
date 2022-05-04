@@ -15,6 +15,7 @@
 		onLoad:function(option){
 			let n = option.imagesrc.length;
 			this.imagesrc = option.imagesrc.substr(1, n-2);
+			console.log(this.imagesrc)
 		},
 		methods: {
 			looksrc(){

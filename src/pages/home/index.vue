@@ -1,7 +1,7 @@
 <template>
 	<uni-row class="photograph">
 		<view class="content" @click="tosave">
-			<img id="cameraimage" src="../../static/icon/camera.png">
+			<img id="cameraimage" :src="this.cameraimg">
 		</view>
 	</uni-row>
 </template>
@@ -10,7 +10,8 @@
 	export default {
 		data() {
 			return {
-				imagesrc:''
+				imagesrc:'',
+				cameraimg:'static/icon/camera.png'
 			}
 		},
 		onLoad() {
@@ -20,13 +21,20 @@
 			tosave() {
 				uni.chooseImage({
 					count:1,
+					crop:{
+						quality:40
+					},
 					success:function(res){
 						this.imagesrc = JSON.stringify(res.tempFilePaths[0])
+						console.log(res)
 						uni.navigateTo({
 							url:`/pages/home/result?imagesrc=${this.imagesrc}`
 						})
 					}
 				})
+			},
+			lookimagesrc() {
+				console.log(this.cameraimg)
 			}
 		} 
 	}
