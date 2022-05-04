@@ -19,15 +19,16 @@ const store = new Vuex.Store({
             state.userName = user.userName || '';
             state.userId = user.userId || '';
             state.token = user.token || '';
-			state.permissionLevel=user.permissionLevel||'';
+            state.permissionLevel = user.permissionLevel || '';
         },
         logout(state) {
             state.hasLogin = false;
             state.userName = "";
             state.userId = '';
             state.token = '';
+            state.permissionLevel = '';
             uni.removeStorage({
-                key:'userInfo'
+                key: 'token'
             })
         }
     },

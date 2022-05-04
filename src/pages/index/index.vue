@@ -13,9 +13,7 @@
         <checkbox id="autologin">自动登录</checkbox>
       </checkbox-group> -->
       <div style="height: 5vh;"></div>
-      <button @click="tohome">
-        &rarr;
-      </button>
+
       <button @click="checkPass" v-bind:disabled="isLogin">
         &rarr;
       </button>
@@ -48,6 +46,8 @@ export default {
     }
   },
   onShow() {
+    this.account = ''
+    this.curpass = ''
     console.log('????????')
     if (!this.hasLogin) {
       uni.showModal({
@@ -156,15 +156,15 @@ export default {
                 'token': this.temptoken,
                 'permissionLevel': data.imgPerlevel
               })
+              let timer = setTimeout(() => {
+                this.tohome()
+                clearInterval(timer)
+              }, 1000)
             }
           })
         })
 
 
-        // let timer = setTimeout(() => {
-        //   this.tohome()
-        //   clearInterval(timer)
-        // }, 1000)
       } else {
         uni.showModal({
           title: '登陆失败',

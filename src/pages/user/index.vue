@@ -56,7 +56,7 @@
 
 
     <view class="bottomview">
-      <button class="btn" @click="logout">
+      <button class="btn" @click="thisLogout">
         <!--        <span id="ripple" ref="ripple" :style="showripple ? '' : 'display:none;'"></span>-->
         退出登录
       </button>
@@ -70,7 +70,8 @@
 
 <script>
 import {
-  mapState
+  mapState,
+  mapMutations
 } from 'vuex'
 
 export default {
@@ -102,7 +103,8 @@ export default {
 
   },
   methods: {
-    logout() {
+    ...mapMutations(['logout']),
+    thisLogout() {
       // console.log(e)
       // let x = e.target.x
       // let y = e.target.y
@@ -121,18 +123,22 @@ export default {
     },
     dialogConfirm() {
       console.log('点击确认')
+      this.logout()
+
+      let pages = getCurrentPages();
+      let beforePage = pages[pages.length - 2]
+
       uni.navigateTo({
-        url: '/pages/index/index'
+        url: '/pages/index/index',
+        success: () => {
+          //onshow失灵，所以手动调用
+          beforePage.onshow()
+        }
       })
       // this.messageText = `点击确认了 ${this.msgType} 窗口`
       // this.$refs.message.open()
     },
-    // start() {
-    //   console.log('wcnm')
-    // },
-    // end() {
-    //   console.log('我服了')
-    // }
+
 
   }
 }
@@ -161,6 +167,9 @@ export default {
 .innerimage {
   height: 100px;
   width: 150px;
+  border-radius: 27px;
+  background-repeat: no-repeat;
+  background-position: center center;
 }
 
 .bottomview {
