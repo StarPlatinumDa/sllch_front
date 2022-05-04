@@ -15,7 +15,7 @@
 			}
 		},
 		onLoad() {
-	
+
 		},
 		methods: {
 			tosave() {
@@ -28,7 +28,7 @@
 						this.imagesrc = JSON.stringify(res.tempFilePaths[0])
 						console.log(res)
 						uni.navigateTo({
-							url:`/pages/home/result?imagesrc=${this.imagesrc}`
+							url:`/pages/home/confirm?imagesrc=${this.imagesrc}`
 						})
 					}
 				})

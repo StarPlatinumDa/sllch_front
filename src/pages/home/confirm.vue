@@ -1,7 +1,10 @@
 <template>
 	<view>
-		<view>
-			<image></image>
+		<view class="picture">
+			<img
+			style=" width: 100%;height:480rpx;padding: 0px;"
+			:src="this.imagesrc" 
+			alt="无法显示图片">
 		</view>
 		<view>
 			<uni-row>
@@ -69,14 +72,21 @@
 </template>
 
 <script>
+	import uploadImage from "../../js_sdk/yushijie-ossutil/ossutil/uploadFile.js"
 	export default {
 		data() {
 			return {
 				level: 1,
 				location: "",
 				comment: "",
-				range: [{"value": 1,"text": "1级病害"},{"value": 2,"text": "2级病害"},{"value": 3,"text": "3级病害"}]
+				range: [{"value": 1,"text": "1级病害"},{"value": 2,"text": "2级病害"},{"value": 3,"text": "3级病害"}],
+				imagesrc: ""
 			}
+		},
+		onLoad(option) {
+			let n = option.imagesrc.length;
+			this.imagesrc = option.imagesrc.substr(1, n-2);
+			console.log(this.imagesrc)
 		},
 		methods: {
 			clickicon() {
@@ -94,7 +104,14 @@
 					}
 				});
 			},
-			dialogConfirm() {
+			dialogConfirm() {				
+				uploadImage('../../static/logo.png', 'images/',
+				result => {
+					console.log("it's ok!");
+				},
+				result => {
+					console.log("it's fail!");
+				})
 				console.log(this.level + this.location + this.comment);
 			},
 			submit() {
