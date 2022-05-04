@@ -1,25 +1,145 @@
 <template>
 	<view class="content">
-		<view>
-			<h1>Hello photo</h1>
+		<view style="margin-top: 60rpx; padding: 30rpx;">
+			<uni-row class="demo-uni-row" :gutter="20">
+				<uni-col :span="21">
+					<uni-easyinput 
+					v-model="input" 
+					placeholder="请输入检索文本" />
+				</uni-col>
+				<uni-col :span="3">
+					<uni-icons type="image" size="30"></uni-icons>
+				</uni-col>
+			</uni-row>
+			<uni-row class="demo-uni-row" :gutter="20">
+				<uni-col :span="12">
+					<drap-box
+					:choiceIndex="defaultType"
+					:choiceList="diseaseType"
+					@returnDat='returnType'
+					></drap-box>
+				</uni-col> 
+				<uni-col :span="12">
+					<drap-box
+					:choiceIndex = "defaultLevel"
+					:choiceList="levels"
+					@returnDat='returnLevel'
+					></drap-box>
+				</uni-col>
+			</uni-row>
+			<uni-row class="demo-uni-row" :gutter="20">
+				<uni-col :span="11">
+					<view class="example-body">
+						<uni-datetime-picker type="date" :clear-icon="false" v-model="beginTime" />
+					</view>
+				</uni-col>
+				<uni-col :span="2"> — </uni-col>
+				<uni-col :span="11">
+					<view class="example-body">
+						<uni-datetime-picker type="date" :clear-icon="false" v-model="endTime" />
+					</view>
+				</uni-col>
+			</uni-row>
+			<uni-row class="demo-uni-row">
+				<uni-col :span="24">
+					<button 
+					type="primary"
+					@click="searching"
+					>搜索</button>
+				</uni-col>
+			</uni-row>
+		</view>
+		<view id='imgs'>
+			<img 
+			  style=" width: 32%;height: 130px;padding: 2px;"
+			  v-for="(composingImg, index) in composingImgs" 
+			  :src="composingImg.image_src"
+			  v-on:click="toPictureDetail(composingImg)"
+			  alt="无法显示图片">
 		</view>
 	</view>
 </template>
 
 <script>
+	import drapBox from '@/components/drap-box/drap-box.vue';
 	export default {
+		components:{
+			drapBox
+		},
 		data() {
 			return {
+				input:'',
+				defaultType:'病害类型',
+				diseaseType: [{
+				  value: '裂缝',
+				  label: '裂缝'
+				}, {
+				  value: '脱落',
+				  label: '脱落'
+				}, {
+				  value: '露筋',
+				  label: '露筋'
+				}, {
+				  value: '渗水',
+				  label: '渗水'
+				}],
+				defaultLevel: '图片等级',
+				levels: [{
+					value: 1 ,
+					label: '等级1'
+				},{
+					value: 2,
+					label: '等级2'
+				},{
+					value: 3,
+					label: '等级3'
+				},{
+					value: 4,
+					label: '等级4'
+				}],
+				beginTime:'',
+				endTime:'',
+				composingImgs:[{
+					image_id:1,
+					image_typeid:1,
+					image_src:'static/composing/2.jpg',
+					image_createtime:'2022-11-01',
+					image_isdelete:1,
+					image_remarks:'无',
+					user_id:1
+				}],
+				
 			}
 		},
 		onLoad() {
 	
 		},
 		methods: {
-	
+			toPictureDetail: function() {
+				uni.navigateTo({
+					url:"/pages/photo/imgdetail"
+				})
+			},
+			returnType(val){
+				this.defaultType = val
+			},
+			returnLevel(val){
+				this.defaultLevel = val
+			},
+			searching(){
+				console.log(this.input, this.defaultType, this.defaultLevel, this.beginTime, this.endTime)
+			}
 		}
 	}
 </script>
 
 <style>
+	.demo-uni-row {
+		margin-bottom: 10px;
+		display: block;
+	}
+	
+	/deep/ .uni-row {
+		margin-bottom: 10px;
+	}
 </style>

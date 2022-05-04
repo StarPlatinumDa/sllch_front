@@ -45,6 +45,20 @@
           "titleNView": false
         }
       }
+    },
+    {
+      "path": "pages/photo/imgdetail",
+      "style": {
+        "navigationBarTitleText": "",
+        "enablePullDownRefresh": false
+      }
+    },
+    {
+      "path": "pages/home/result",
+      "style": {
+        "navigationBarTitleText": "",
+        "enablePullDownRefresh": false
+      }
     }
   ],
   "globalStyle": {
@@ -55,7 +69,7 @@
   },
   "tabBar": {
     "color": "#767676",
-    "selectedColor": "#000DFF",
+    "selectedColor": "#4F89F1",
     "borderStyle": "black",
     "backgroundColor": "#ffffff",
     "list": [
