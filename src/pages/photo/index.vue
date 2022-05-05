@@ -4,11 +4,13 @@
 			<uni-row class="demo-uni-row" :gutter="20">
 				<uni-col :span="21">
 					<uni-easyinput 
+					prefixIcon="search"
+					@iconClick="searching"
 					v-model="input" 
 					placeholder="请输入检索文本" />
 				</uni-col>
 				<uni-col :span="3">
-					<uni-icons type="image" size="30"></uni-icons>
+					<uni-icons type="image" size="40"></uni-icons>
 				</uni-col>
 			</uni-row>
 			<uni-row class="demo-uni-row" :gutter="20">
@@ -40,22 +42,15 @@
 					</view>
 				</uni-col>
 			</uni-row>
-			<uni-row class="demo-uni-row">
-				<uni-col :span="24">
-					<button 
-					type="primary"
-					@click="searching"
-					>搜索</button>
-				</uni-col>
-			</uni-row>
-		</view>
-		<view id='imgs'>
-			<img 
-			  style=" width: 32%;height: 130px;padding: 2px;"
-			  v-for="(composingImg, index) in composingImgs" 
-			  :src="composingImg.image_src"
-			  v-on:click="toPictureDetail(composingImg)"
-			  alt="无法显示图片">
+			<uni-grid :column="3" ref='imgs' :showBorder="false" :square="false">
+				<img
+					style="width: 32%;"
+					v-for="(composingImg, index) in composingImgs" 
+					:src="composingImg.image_src"
+					ref="img"
+					v-on:click="toPictureDetail(composingImg)"
+					alt="无法显示图片" />
+			</uni-grid>
 		</view>
 	</view>
 </template>
@@ -107,12 +102,46 @@
 					image_isdelete:1,
 					image_remarks:'无',
 					user_id:1
+				}, {
+					image_id:1,
+					image_typeid:1,
+					image_src:'static/composing/2.jpg',
+					image_createtime:'2022-11-01',
+					image_isdelete:1,
+					image_remarks:'无',
+					user_id:1
+				}, {
+					image_id:1,
+					image_typeid:1,
+					image_src:'static/composing/2.jpg',
+					image_createtime:'2022-11-01',
+					image_isdelete:1,
+					image_remarks:'无',
+					user_id:1
+				}, {
+					image_id:1,
+					image_typeid:1,
+					image_src:'static/composing/2.jpg',
+					image_createtime:'2022-11-01',
+					image_isdelete:1,
+					image_remarks:'无',
+					user_id:1
 				}],
 				
 			}
 		},
 		onLoad() {
-	
+			
+		},
+		onReady() {
+			for (let i=0; i<this.$refs['img'].length; i++) {
+				let mr = '2%'
+				if ((i + 1) % 3 === 0) {
+					mr = '0'
+				}
+				this.$refs['img'][i].style.marginRight = mr
+				this.$refs['img'][i].style.marginTop = '10px'
+			}
 		},
 		methods: {
 			toPictureDetail: function(composingImg) {
