@@ -68,11 +68,19 @@
 				@confirm="dialogConfirm"></uni-popup-dialog>
 			</uni-popup>
 		</view>
+		<view>
+			<!-- 提示信息弹窗 -->
+			<uni-popup ref="message" type="message">
+				<uni-popup-message type="error" message="提交失败,请检查网络设置" :duration="2000"></uni-popup-message>
+			</uni-popup>
+		</view>
 	</view>
 </template>
 
 <script>
-	import uploadImage from "../../js_sdk/yushijie-ossutil/ossutil/uploadFile.js"
+	import {
+	  mapState
+	} from 'vuex'
 	export default {
 		data() {
 			return {
@@ -80,8 +88,12 @@
 				location: "",
 				comment: "",
 				range: [{"value": 1,"text": "1级病害"},{"value": 2,"text": "2级病害"},{"value": 3,"text": "3级病害"}],
-				imagesrc: ""
+				imagesrc: "",
+				damageType: 6,
 			}
+		},
+		computed: {
+		  ...mapState(['forcedLogin', 'hasLogin', 'userName', 'userId', 'token', 'permissionLevel', 'frontUrl'])
 		},
 		onLoad(option) {
 			let n = option.imagesrc.length;
@@ -104,13 +116,42 @@
 					}
 				});
 			},
-			dialogConfirm() {				
-				uploadImage('../../static/logo.png', 'images/',
-				result => {
-					console.log("it's ok!");
-				},
-				result => {
-					console.log("it's fail!");
+			dialogConfirm() {	
+				let that = this;
+				uni.uploadFile({
+					url: that.frontUrl + '/common/upload',
+					header: {
+					  'Authorization': that.token,
+					  'Context-Type': "multipart/form-data"
+					},
+					filePath: that.imagesrc,
+					name: "file",
+					success: (res) => {
+						let imageurl = JSON.parse(res.data).url;
+						uni.request({
+							url: that.frontUrl + '/imageInfo/imagemanage',
+							method: 'POST',
+							header: {
+							  'Authorization': that.token,
+							},
+							data: {
+								"imagePerlevel": that.level,
+								"imageRemarks": that.comment,
+								"imageShotplace": that.location,
+								"imageSrc": imageurl,
+								"imageIsdelete": 0,
+								"imageCreatetime": new Date(),
+								"userId": that.userId,
+								"imageTypeid": that.damageType,
+							},
+							fail: (res) => {
+								that.$refs.message.open();
+							}
+						})
+					},
+					fail: (res) => {
+						that.$refs.message.open();
+					}
 				})
 				console.log(this.level + this.location + this.comment);
 			},

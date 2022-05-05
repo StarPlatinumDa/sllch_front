@@ -59,7 +59,14 @@
         "navigationBarTitleText": "",
         "enablePullDownRefresh": false
       }
-    }
+    },
+	{
+	  "path": "pages/home/confirm",
+	  "style": {
+	    "navigationBarTitleText": "",
+	    "enablePullDownRefresh": false
+	  }
+	}
   ],
   "globalStyle": {
     "navigationBarTextStyle": "black",
