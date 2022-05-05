@@ -6,7 +6,7 @@
 					<uni-easyinput 
 					prefixIcon="search"
 					@iconClick="searching"
-					v-model="input" 
+					v-model="query" 
 					placeholder="请输入检索文本" />
 				</uni-col>
 				<uni-col :span="3">
@@ -44,9 +44,9 @@
 			</uni-row>
 			<uni-grid :column="3" ref='imgs' :showBorder="false" :square="false">
 				<img
-					style="width: 32%;"
+					style="width: 33.3%;"
 					v-for="(composingImg, index) in composingImgs" 
-					:src="composingImg.image_src"
+					:src="composingImg.imageSrc"
 					ref="img"
 					v-on:click="toPictureDetail(composingImg)"
 					alt="无法显示图片" />
@@ -56,6 +56,7 @@
 </template>
 
 <script>
+	import { mapState, mapMutations } from 'vuex'
 	import drapBox from '@/components/drap-box/drap-box.vue';
 	export default {
 		components:{
@@ -63,7 +64,7 @@
 		},
 		data() {
 			return {
-				input:'',
+				query: '',
 				defaultType:'病害类型',
 				diseaseType: [{
 				  value: '裂缝',
@@ -95,37 +96,13 @@
 				beginTime:'',
 				endTime:'',
 				composingImgs:[{
-					image_id:1,
-					image_typeid:1,
-					image_src:'static/composing/2.jpg',
-					image_createtime:'2022-11-01',
-					image_isdelete:1,
-					image_remarks:'无',
-					user_id:1
-				}, {
-					image_id:1,
-					image_typeid:1,
-					image_src:'static/composing/2.jpg',
-					image_createtime:'2022-11-01',
-					image_isdelete:1,
-					image_remarks:'无',
-					user_id:1
-				}, {
-					image_id:1,
-					image_typeid:1,
-					image_src:'static/composing/2.jpg',
-					image_createtime:'2022-11-01',
-					image_isdelete:1,
-					image_remarks:'无',
-					user_id:1
-				}, {
-					image_id:1,
-					image_typeid:1,
-					image_src:'static/composing/2.jpg',
-					image_createtime:'2022-11-01',
-					image_isdelete:1,
-					image_remarks:'无',
-					user_id:1
+					imageId:1,
+					imageTypeid:1,
+					imageSrc:'static/composing/2.jpg',
+					imageCreatetime:'2022-11-01',
+					imageIsdelete:1,
+					imageRemarks:'无',
+					userId:1
 				}],
 				
 			}
@@ -134,14 +111,10 @@
 			
 		},
 		onReady() {
-			for (let i=0; i<this.$refs['img'].length; i++) {
-				let mr = '2%'
-				if ((i + 1) % 3 === 0) {
-					mr = '0'
-				}
-				this.$refs['img'][i].style.marginRight = mr
-				this.$refs['img'][i].style.marginTop = '10px'
-			}
+			this.setImages()
+		},
+		computed: {
+			...mapState(['userId', 'token', 'frontUrl'])
 		},
 		methods: {
 			toPictureDetail: function(composingImg) {
@@ -156,7 +129,32 @@
 				this.defaultLevel = val
 			},
 			searching(){
-				console.log(this.input, this.defaultType, this.defaultLevel, this.beginTime, this.endTime)
+				let url = this.frontUrl + `/imageInfo/imagemanage/getImageByText/${this.userId}?` +
+					`level=&query=${this.query}&beginTime=${this.beginTime}&endTime=${this.endTime}`
+				console.log(url)
+				uni.request({
+				  url: url,
+				  method: 'GET',
+				  header: {
+				    'Authorization': this.token
+				  },
+				  success: (res) => {
+				    let data = res.data
+					this.composingImgs = data.data
+					this.setImages()
+				  }
+				})
+			},
+			setImages() {
+				// console.log(this.$refs['img'].length)
+				// for (let i=0; i<this.$refs['img'].length; i++) {
+				// 	let mr = '2%'
+				// 	if ((i + 1) % 3 === 0) {
+				// 		mr = '0'
+				// 	}
+				// 	this.$refs['img'][i].style.marginRight = mr
+				// 	this.$refs['img'][i].style.marginTop = '10px'
+				// }
 			}
 		}
 	}
