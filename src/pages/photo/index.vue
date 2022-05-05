@@ -51,10 +51,10 @@
 		</view>
 		<view id='imgs'>
 			<img 
-			  style=" width: 32%;height: 130px;padding: 2px;"
+			  style=" width: 32%;height:130px;padding: 2px;"
 			  v-for="(composingImg, index) in composingImgs" 
-			  :src="composingImg.image_src"
-			  v-on:click="toPictureDetail(composingImg)"
+			  :src="composingImgs[index].image_src"
+			  v-on:click="toPictureDetail(composingImgs[index])"
 			  alt="无法显示图片">
 		</view>
 	</view>
@@ -62,6 +62,7 @@
 
 <script>
 	import drapBox from '@/components/drap-box/drap-box.vue';
+	
 	export default {
 		components:{
 			drapBox
@@ -112,7 +113,6 @@
 			}
 		},
 		onLoad() {
-	
 		},
 		methods: {
 			toPictureDetail: function(composingImg) {
@@ -121,10 +121,12 @@
 				})
 			},
 			returnType(val){
-				this.defaultType = val
+				console.log(val);
+				this.defaultType = val;
 			},
 			returnLevel(val){
-				this.defaultLevel = val
+				console.log(val);
+				this.defaultLevel = val;
 			},
 			searching(){
 				console.log(this.input, this.defaultType, this.defaultLevel, this.beginTime, this.endTime)

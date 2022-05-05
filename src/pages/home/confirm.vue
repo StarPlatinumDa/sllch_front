@@ -85,8 +85,10 @@
 		},
 		onLoad(option) {
 			let n = option.imagesrc.length;
-			this.imagesrc = option.imagesrc.substr(1, n-2);
-			console.log(this.imagesrc)
+			if(option.tratype == 1)
+				this.imagesrc = option.imagesrc;
+			else
+				this.imagesrc = option.imagesrc.substr(1, n-2);
 		},
 		methods: {
 			clickicon() {

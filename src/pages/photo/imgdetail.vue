@@ -99,6 +99,7 @@
 			}
 		},
 		onLoad(option) {
+			console.log(option)
 			// this.imgdtail = option.imgdtail
 			// console.log(this.imgdtail)
 		},

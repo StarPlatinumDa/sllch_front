@@ -59,7 +59,14 @@
         "navigationBarTitleText": "",
         "enablePullDownRefresh": false
       }
-    }
+    },
+	{
+		"path": "pages/home/confirm",
+		"style": {
+			"navigationBarTitleText": "保存图片",
+			"enablePullDownRefresh": false
+		}
+	}
   ],
   "globalStyle": {
     "navigationBarTextStyle": "black",

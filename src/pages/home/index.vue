@@ -3,6 +3,10 @@
 		<view class="content" @click="tosave">
 			<img id="cameraimage" :src="this.cameraimg">
 		</view>
+		<button 
+		@click="usealbum"
+		style="margin: 50rpx 100rpx; font-size: 110%; background-color: #4F89F1; color: white;"
+		>使用本地图片识别</button>
 	</uni-row>
 </template>
 
@@ -11,7 +15,8 @@
 		data() {
 			return {
 				imagesrc:'',
-				cameraimg:'static/icon/camera.png'
+				cameraimg:'static/icon/camera.png',
+				photosrc:''
 			}
 		},
 		onLoad() {
@@ -21,20 +26,33 @@
 			tosave() {
 				uni.chooseImage({
 					count:1,
+					sourceType:['camera'],
 					crop:{
 						quality:40
 					},
 					success:function(res){
 						this.imagesrc = JSON.stringify(res.tempFilePaths[0])
-						console.log(res)
+						this.imagesrc = 'file:///storage/emulated/0/Android/data/io.dcloud.HBuilder/apps/HBuilder/' + res.tempFilePaths[0].substr(1)
 						uni.navigateTo({
-							url:`/pages/home/confirm?imagesrc=${this.imagesrc}`
+							url:`/pages/home/confirm?imagesrc=${this.imagesrc}&tratype=1`
 						})
 					}
 				})
 			},
-			lookimagesrc() {
-				console.log(this.cameraimg)
+			usealbum(){
+				uni.chooseImage({
+					count:1,
+					sourceType:['album'],
+					crop:{
+						quality:40
+					},
+					success:function(res){
+						this.imagesrc = JSON.stringify(res.tempFilePaths[0])
+						uni.navigateTo({
+							url:`/pages/home/confirm?imagesrc=${this.imagesrc}&tratype=2`
+						})
+					}
+				})
 			}
 		} 
 	}
