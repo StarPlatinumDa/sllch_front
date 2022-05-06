@@ -84,11 +84,7 @@
 			}
 		},
 		onLoad(option) {
-			let n = option.imagesrc.length;
-			if(option.tratype == 1)
-				this.imagesrc = option.imagesrc;
-			else
-				this.imagesrc = option.imagesrc.substr(1, n-2);
+			this.imagesrc = option.imagesrc;
 		},
 		methods: {
 			clickicon() {

@@ -34,7 +34,7 @@
 						this.imagesrc = JSON.stringify(res.tempFilePaths[0])
 						this.imagesrc = 'file:///storage/emulated/0/Android/data/io.dcloud.HBuilder/apps/HBuilder/' + res.tempFilePaths[0].substr(1)
 						uni.navigateTo({
-							url:`/pages/home/confirm?imagesrc=${this.imagesrc}&tratype=1`
+							url:`/pages/home/result?imagesrc=${this.imagesrc}&tratype=1`
 						})
 					}
 				})
@@ -49,7 +49,7 @@
 					success:function(res){
 						this.imagesrc = JSON.stringify(res.tempFilePaths[0])
 						uni.navigateTo({
-							url:`/pages/home/confirm?imagesrc=${this.imagesrc}&tratype=2`
+							url:`/pages/home/result?imagesrc=${this.imagesrc}&tratype=2`
 						})
 					}
 				})
