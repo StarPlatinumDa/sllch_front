@@ -4,11 +4,13 @@
 			<uni-row class="demo-uni-row" :gutter="20">
 				<uni-col :span="21">
 					<uni-easyinput 
-					v-model="input" 
+					prefixIcon="search"
+					@iconClick="searching"
+					v-model="query" 
 					placeholder="请输入检索文本" />
 				</uni-col>
 				<uni-col :span="3">
-					<uni-icons type="image" size="30"></uni-icons>
+					<uni-icons type="image" size="40"></uni-icons>
 				</uni-col>
 			</uni-row>
 			<uni-row class="demo-uni-row" :gutter="20">
@@ -40,27 +42,21 @@
 					</view>
 				</uni-col>
 			</uni-row>
-			<uni-row class="demo-uni-row">
-				<uni-col :span="24">
-					<button 
-					type="primary"
-					@click="searching"
-					>搜索</button>
-				</uni-col>
-			</uni-row>
-		</view>
-		<view id='imgs'>
-			<img 
-			  style=" width: 32%;height:130px;padding: 2px;"
-			  v-for="(composingImg, index) in composingImgs" 
-			  :src="composingImgs[index].image_src"
-			  v-on:click="toPictureDetail(composingImgs[index])"
-			  alt="无法显示图片">
+			<uni-grid :column="3" ref='imgs' :showBorder="false" :square="false">
+				<img
+					style="width: 33.3%;"
+					v-for="(composingImg, index) in composingImgs" 
+					:src="composingImg.imageSrc"
+					ref="img"
+					v-on:click="toPictureDetail(composingImg)"
+					alt="无法显示图片" />
+			</uni-grid>
 		</view>
 	</view>
 </template>
 
 <script>
+	import { mapState, mapMutations } from 'vuex'
 	import drapBox from '@/components/drap-box/drap-box.vue';
 	
 	export default {
@@ -69,7 +65,7 @@
 		},
 		data() {
 			return {
-				input:'',
+				query: '',
 				defaultType:'病害类型',
 				diseaseType: [{
 				  value: '裂缝',
@@ -101,18 +97,25 @@
 				beginTime:'',
 				endTime:'',
 				composingImgs:[{
-					image_id:1,
-					image_typeid:1,
-					image_src:'static/composing/2.jpg',
-					image_createtime:'2022-11-01',
-					image_isdelete:1,
-					image_remarks:'无',
-					user_id:1
+					imageId:1,
+					imageTypeid:1,
+					imageSrc:'static/composing/2.jpg',
+					imageCreatetime:'2022-11-01',
+					imageIsdelete:1,
+					imageRemarks:'无',
+					userId:1
 				}],
 				
 			}
 		},
 		onLoad() {
+			
+		},
+		onReady() {
+			this.setImages()
+		},
+		computed: {
+			...mapState(['userId', 'token', 'frontUrl'])
 		},
 		methods: {
 			toPictureDetail: function(composingImg) {
@@ -129,7 +132,32 @@
 				this.defaultLevel = val;
 			},
 			searching(){
-				console.log(this.input, this.defaultType, this.defaultLevel, this.beginTime, this.endTime)
+				let url = this.frontUrl + `/imageInfo/imagemanage/getImageByText/${this.userId}?` +
+					`level=&query=${this.query}&beginTime=${this.beginTime}&endTime=${this.endTime}`
+				console.log(url)
+				uni.request({
+				  url: url,
+				  method: 'GET',
+				  header: {
+				    'Authorization': this.token
+				  },
+				  success: (res) => {
+				    let data = res.data
+					this.composingImgs = data.data
+					this.setImages()
+				  }
+				})
+			},
+			setImages() {
+				// console.log(this.$refs['img'].length)
+				// for (let i=0; i<this.$refs['img'].length; i++) {
+				// 	let mr = '2%'
+				// 	if ((i + 1) % 3 === 0) {
+				// 		mr = '0'
+				// 	}
+				// 	this.$refs['img'][i].style.marginRight = mr
+				// 	this.$refs['img'][i].style.marginTop = '10px'
+				// }
 			}
 		}
 	}

@@ -72,8 +72,10 @@
 					备注信息:
 				</uni-row>
 				<uni-row>
-					<uni-col :offset="2">
-						<uni-easyinput type="textarea" v-model="imgdtail.image_remarks"  disabled="disabled" />
+					<uni-col :span="2"></uni-col>
+					<uni-col :span="4"
+					v-for="(item, index) in this.imgdtail.remarklist">
+						<uni-tag :text="item" type="primary" :circle="true"></uni-tag>
 					</uni-col>
 				</uni-row>
 			</uni-col>
@@ -92,7 +94,7 @@
 					image_src:'static/composing/2.jpg',
 					image_createtime:'2022-11-01',
 					image_isdelete:1,
-					image_remarks:'无',
+					image_remarks:'渗水|漏水|渗漏',
 					user_id:1,
 					image_shotplace:"重庆市渝北区"
 				}
@@ -100,8 +102,10 @@
 		},
 		onLoad(option) {
 			console.log(option)
+			this.imgdtail.remarklist = this.imgdtail.image_remarks.split('|')
 			// this.imgdtail = option.imgdtail
 			// console.log(this.imgdtail)
+			console.log(this.imgdtail.remarklist)
 		},
 		methods: {
 			

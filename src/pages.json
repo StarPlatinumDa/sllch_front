@@ -61,11 +61,11 @@
       }
     },
 	{
-		"path": "pages/home/confirm",
-		"style": {
-			"navigationBarTitleText": "保存图片",
-			"enablePullDownRefresh": false
-		}
+	  "path": "pages/home/confirm",
+	  "style": {
+	    "navigationBarTitleText": "",
+	    "enablePullDownRefresh": false
+	  }
 	}
   ],
   "globalStyle": {
