@@ -12,14 +12,32 @@ const store = new Vuex.Store({
         token: '',
         permissionLevel: '2',
         password: '123456',
-        frontUrl:'http://localhost:8080'
+        frontUrl:'http://192.168.2.6:8080',
+		mySocket: {
+		    socketTask: null,
+		    socketOpen: false,
+		    socketMsgQueue: [],
+		    timeoutObj: null,
+		    timeout: 10000,
+		    socketUrl: 'ws://192.168.2.6:8001/news',
+		},
+		news: [],
+		chatFrames: [],
+		currentChatFrame: {},
+		friends: [],
+		verifications: [],
+		agentVerifications: [],
+		avatar: '',
+		nickname: ''
     },
     mutations: {
         login(state, user) {
-            state.hasLogin = true
+            state.hasLogin = true;
             state.userName = user.userName || '';
             state.userId = user.userId || '';
             state.token = user.token || '';
+			state.avatar = user.avatar;
+			state.nickname = user.nickname;
             state.permissionLevel = user.permissionLevel || '';
         },
         logout(state) {
@@ -31,7 +49,25 @@ const store = new Vuex.Store({
             uni.removeStorage({
                 key: 'token'
             })
-        }
+        },
+		setChatFrames(state, chatFrames) {
+			state.chatFrames = chatFrames;
+		},
+		setNews(state, news) {
+			state.news = news;
+		},
+		setCurrentChatFrame(state, currentChatFrame) {
+			state.currentChatFrame = currentChatFrame;
+		},
+		setFriends(state, friends) {
+			state.friends = friends;
+		},
+		setVerifications(state, verifications) {
+			state.verifications = verifications;
+		},
+		setNews(state, news) {
+			state.news = news;
+		}
     },
     actions: {},
     // getters: {
