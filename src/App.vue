@@ -6,9 +6,12 @@ export default {
     ...mapMutations(['login'])
   },
   onLaunch: function () {
-    console.log('App Launch')
-
-
+    const that = this;
+    uni.getSystemInfo({
+    	success(res) {
+    		that.globalData.statusBarHeight = res.statusBarHeight;
+    	}
+    })
   },
   onShow: function () {
     console.log('App Show')
@@ -20,10 +23,16 @@ export default {
     uni.navigateTo({
       url: 'pages/404/404'
     })
+  },
+  globalData:{
+  	statusBarHeight:'',//手机顶部状态栏高度
   }
 }
 </script>
 
 <style>
 /*每个页面公共css */
+	page {
+		height: 100%;
+	}
 </style>

@@ -139,18 +139,17 @@
 			searching(){
 				let url = this.frontUrl + `/imageInfo/imagemanage/getImageByText/${this.userId}?` +
 					`level=&query=${this.query}&beginTime=${this.beginTime}&endTime=${this.endTime}`
-				console.log(url)
 				uni.request({
-				  url: url,
-				  method: 'GET',
-				  header: {
-				    'Authorization': this.token
-				  },
-				  success: (res) => {
-				    let data = res.data
-					this.composingImgs = data.data
-					this.setImages()
-				  }
+				    url: url,
+				    method: 'GET',
+				    header: {
+						'Authorization': this.token
+				    },
+				    success: (res) => {
+						let data = res.data
+						this.composingImgs = data.data
+						this.setImages()
+				    }
 				})
 			},
 			setImages() {
