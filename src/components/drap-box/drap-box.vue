@@ -13,7 +13,7 @@
 				<view 
 				class="select_constent"
 				v-for="(item, index) in list"
-				@click="selectChonice(list[index])"> 
+				@click="selectChonice(list[index])">
 					<text class="select_text" >{{list[index].label}}</text>
 				</view>
 			</view>

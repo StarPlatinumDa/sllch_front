@@ -42,7 +42,7 @@
 
 		<uni-row class="demo-uni-row">
 			<uni-col>
-				<uni-row>
+				<uni-row style="margin-left: 20rpx;">
 					桥梁位置:
 				</uni-row>
 				<uni-row>
@@ -55,7 +55,7 @@
 
 		<uni-row class="demo-uni-row">
 			<uni-col>
-				<uni-row class="">
+				<uni-row style="margin-left: 20rpx;">
 					拍摄人员:
 				</uni-row>
 				<uni-row>
@@ -68,14 +68,17 @@
 
 		<uni-row class="demo-uni-row">
 			<uni-col>
-				<uni-row>
+				<uni-row style="margin-left: 20rpx;">
 					备注信息:
 				</uni-row>
-				<uni-row>
-					<uni-col :span="2"></uni-col>
-					<uni-col :span="4"
+				<uni-row style="margin: 0 50rpx;">
+					<uni-col :span="5"
 					v-for="(item, index) in this.imgdtail.remarklist">
-						<uni-tag :text="item" type="primary" :circle="true"></uni-tag>
+						<uni-tag 
+						:text="item" 
+						type="primary" 
+						size="normal"
+						></uni-tag>
 					</uni-col>
 				</uni-row>
 			</uni-col>

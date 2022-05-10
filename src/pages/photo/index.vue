@@ -10,16 +10,21 @@
 					placeholder="请输入检索文本" />
 				</uni-col>
 				<uni-col :span="3">
-					<uni-icons type="image" size="40"></uni-icons>
+					<uni-icons @click="getimagefromimage" type="image" size="40"></uni-icons>
 				</uni-col>
 			</uni-row>
 			<uni-row class="demo-uni-row" :gutter="20">
 				<uni-col :span="12">
-					<drap-box
+					<!-- <drap-box
 					:choiceIndex="defaultType"
 					:choiceList="diseaseType"
 					@returnDat='returnType'
-					></drap-box>
+					></drap-box> -->
+					<uni-data-select
+						v-model="defaultType"
+						:localdata="diseaseType"
+						@change="returnType"
+					></uni-data-select>
 				</uni-col> 
 				<uni-col :span="12">
 					<drap-box
@@ -158,6 +163,9 @@
 				// 	this.$refs['img'][i].style.marginRight = mr
 				// 	this.$refs['img'][i].style.marginTop = '10px'
 				// }
+			},
+			getimagefromimage() {
+				
 			}
 		}
 	}
