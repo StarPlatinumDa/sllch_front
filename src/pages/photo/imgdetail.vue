@@ -24,7 +24,7 @@
 			</uni-col >
 			<uni-col :span="6" class="card">
 				<uni-row>
-					<text class="value">1级图片</text>
+					<text class="value">{{this.imgdtail.Image_perlevel}}级图片</text>
 				</uni-row>
 				<uni-row>
 					<text class="key">图片等级</text>
@@ -92,23 +92,19 @@
 			return {
 				gutter: 0,
 				imgdtail:{
-					image_id:1,
-					image_typeid:1,
-					image_src:'static/composing/2.jpg',
-					image_createtime:'2022-11-01',
-					image_isdelete:1,
-					image_remarks:'渗水|漏水|渗漏',
-					user_id:1,
-					image_shotplace:"重庆市渝北区"
+					// image_id:1,
+					// image_typeid:1,
+					// image_src:'static/composing/2.jpg',
+					// image_createtime:'2022-11-01',
+					// image_isdelete:1,
+					// image_remarks:'渗水|漏水|渗漏',
+					// user_id:1,
+					// image_shotplace:"重庆市渝北区"
 				}
 			}
 		},
 		onLoad(option) {
-			console.log(option)
-			this.imgdtail.remarklist = this.imgdtail.image_remarks.split('|')
-			// this.imgdtail = option.imgdtail
-			// console.log(this.imgdtail)
-			console.log(this.imgdtail.remarklist)
+			this.imgdtail = JSON.parse(option.imgdtail)
 		},
 		methods: {
 			
