@@ -10,21 +10,16 @@
 					placeholder="请输入检索文本" />
 				</uni-col>
 				<uni-col :span="3">
-					<uni-icons @click="getimagefromimage" type="image" size="40"></uni-icons>
+					<uni-icons type="image" size="40"></uni-icons>
 				</uni-col>
 			</uni-row>
 			<uni-row class="demo-uni-row" :gutter="20">
 				<uni-col :span="12">
-					<!-- <drap-box
+					<drap-box
 					:choiceIndex="defaultType"
 					:choiceList="diseaseType"
 					@returnDat='returnType'
-					></drap-box> -->
-					<uni-data-select
-						v-model="defaultType"
-						:localdata="diseaseType"
-						@change="returnType"
-					></uni-data-select>
+					></drap-box>
 				</uni-col> 
 				<uni-col :span="12">
 					<drap-box
@@ -49,9 +44,9 @@
 			</uni-row>
 			<uni-grid :column="3" ref='imgs' :showBorder="false" :square="false">
 				<img
-					style="width: 33.3%;"
+					style="width: 31.6%; padding: 5rpx;"
 					v-for="(composingImg, index) in composingImgs" 
-					:src="composingImg.imageSrc"
+					:src="composingImg.image_src"
 					ref="img"
 					v-on:click="toPictureDetail(composingImg)"
 					alt="无法显示图片" />
@@ -102,19 +97,46 @@
 				beginTime:'',
 				endTime:'',
 				composingImgs:[{
-					imageId:1,
-					imageTypeid:1,
-					imageSrc:'static/composing/2.jpg',
-					imageCreatetime:'2022-11-01',
-					imageIsdelete:1,
-					imageRemarks:'无',
-					userId:1
+					image_id:1,
+					image_typeid:1,
+					image_src:'static/composing/2.jpg',
+					image_createtime:'2022-11-01',
+					image_isdelete:1,
+					image_remarks:'无',
+					user_id:1,
+					Image_perlevel:1
+				},{
+					image_id:1,
+					image_typeid:1,
+					image_src:'static/composing/3.jpg',
+					image_createtime:'2022-11-01',
+					image_isdelete:1,
+					image_remarks:'无',
+					user_id:1,
+					Image_perlevel:1
+				},{
+					image_id:1,
+					image_typeid:1,
+					image_src:'static/composing/3.jpg',
+					image_createtime:'2022-11-01',
+					image_isdelete:1,
+					image_remarks:'无',
+					user_id:1,
+					Image_perlevel:1
+				},{
+					image_id:1,
+					image_typeid:1,
+					image_src:'static/composing/3.jpg',
+					image_createtime:'2022-11-01',
+					image_isdelete:1,
+					image_remarks:'无',
+					user_id:1,
+					Image_perlevel:1
 				}],
 				
 			}
 		},
 		onLoad() {
-			
 		},
 		onReady() {
 			this.setImages()
@@ -125,15 +147,13 @@
 		methods: {
 			toPictureDetail: function(composingImg) {
 				uni.navigateTo({
-					url:`/pages/photo/imgdetail?imgdtail=${composingImg}`
+					url:'/pages/photo/imgdetail?imgdtail='+JSON.stringify(composingImg)
 				})
 			},
 			returnType(val){
-				console.log(val);
 				this.defaultType = val;
 			},
 			returnLevel(val){
-				console.log(val);
 				this.defaultLevel = val;
 			},
 			searching(){
@@ -163,6 +183,7 @@
 				// 	this.$refs['img'][i].style.marginTop = '10px'
 				// }
 			},
+			
 			getimagefromimage() {
 				
 			}
