@@ -11,7 +11,7 @@
             @touchend="touchChatFrame(false, index)"
             @click="enterChatFrame(item.chatId, item.chatType)">
                 <view class="image">
-                    <image v-if="item.chatType == 0" mode="aspectFill" :src="item.chatObjectPhoto"></image>
+                    <image v-if="item.chatType == 0" mode="aspectFill" :src="frontUrl+item.chatObjectPhoto"></image>
 					<image v-else mode="aspectFill" :src="item.groupPhoto"></image>
                 </view>
                 <view class="content">
@@ -21,8 +21,8 @@
                         <text class="chatLastTime" v-text="item.lastNews.newsTime"></text>
                     </view>
                     <view class="message">
-                        <text v-if="item.lastNews.newsType=='voice'">[语音]</text>
-						<text v-else-if="item.lastNews.newsType=='img'">[图片]</text>
+                        <text v-if="item.lastNews.newsType=='voice'" v-text="'[语音]'"></text>
+						<text v-else-if="item.lastNews.newsType=='img'" v-text="'[图片]'"></text>
 						<text v-else v-text="item.lastNews.newsContent"></text>
                     </view>
                 </view>
@@ -87,11 +87,6 @@ export default {
 						for (let i=0; i<this.chatFrames.length; i++) {
 							if (this.chatFrames[i].chatId == data.toId && this.chatFrames[i].chatType == news.source) {
 								let content = data.msg
-								if (data.newsType === 'img') {
-									content = '[图片]'
-								} else if (data.newsType === 'voice') {
-									content = '[语音]'
-								}
 								this.chatFrames[i].lastNews = {
 									newsTime: this.formatDate(data.time),
 									newsContent: content,
@@ -127,11 +122,6 @@ export default {
 						for (let i=0; i<this.chatFrames.length; i++) {
 							if (this.chatFrames[i].chatId == data.toId && this.chatFrames[i].chatType == news.source) {
 								let content = data.msg
-								if (data.newsType == 'img') {
-									content = '[图片]'
-								} else if (data.newsType == 'voice') {
-									content = '[语音]'
-								}
 								this.chatFrames[i].lastNews = {
 									newsTime: this.formatDate(data.time),
 									newsContent: content,

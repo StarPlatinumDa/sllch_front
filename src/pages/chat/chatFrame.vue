@@ -3,8 +3,8 @@
         <scroll-view class="body" id="body">
             <view v-for="(item, index) in myNews" :key="index">
                 <view class="message overflow-hidden" v-if="userId == item.fromId">
-                    <image v-if="currentChatFrame.chatType == 0" :src="currentChatFrame.userPhoto" mode="aspectFill" class="float-right headPhoto"></image>
-					<image v-else :src="item.headPhoto" mode="aspectFill" class="float-right headPhoto"></image>
+                    <image v-if="currentChatFrame.chatType == 0" :src="frontUrl+currentChatFrame.userPhoto" mode="aspectFill" class="float-right headPhoto"></image>
+					<image v-else :src="frontUrl+item.headPhoto" mode="aspectFill" class="float-right headPhoto"></image>
 					<view class="float-right" style="position: relative;">
 						<view class="nickname" style="text-align: right;" v-if="currentChatFrame.chatType == 1"><text v-text="item.nickname"></text></view>
 						<view class="float-right text" v-if="item.newsType == 'text'">
@@ -15,14 +15,14 @@
 							<text v-text="item.playTime"></text>
 						</view>
 						<view class="float-right imgContainer overflow-hidden" v-else-if="item.newsType == 'img'">
-							<image :src="item.msg" mode="widthFix" class="newsImg"></image>
+							<image :src="item.msg" mode="widthFix" @touchend="previewImage(item.msg)" class="newsImg"></image>
 						</view>
 					</view>
                     
                 </view>
                 <view v-else class="message overflow-hidden">
-                    <image v-if="currentChatFrame.chatType == 0" :src="currentChatFrame.chatObjectPhoto" mode="aspectFill" class="float-left headPhoto"></image>
-					<image v-else :src="item.headPhoto" mode="aspectFill" class="float-left headPhoto"></image>
+                    <image v-if="currentChatFrame.chatType == 0" :src="frontUrl+currentChatFrame.chatObjectPhoto" mode="aspectFill" class="float-left headPhoto"></image>
+					<image v-else :src="frontUrl+item.headPhoto" mode="aspectFill" class="float-left headPhoto"></image>
 					<view class="float-left" style="position: relative;">
 						<view class="nickname" style="text-align: left;"><text v-text="item.nickname" v-if="currentChatFrame.chatType == 1"></text></view>
 						<view class="float-left text" v-if="item.newsType == 'text'">
@@ -33,7 +33,7 @@
 							<text v-text="item.playTime"></text>
 						</view>
 						<view class="float-left imgContainer overflow-hidden" v-else-if="item.newsType == 'img'">
-							<image :src="item.msg" mode="widthFix" class="newsImg"></image>
+							<image :src="item.msg" mode="widthFix" @touchend="previewImage(item.msg)" class="newsImg"></image>
 						</view>
 					</view>
                 </view>
@@ -140,6 +140,14 @@ export default {
     },
     methods: {
         ...mapMutations(['setNews', 'setChatFrames']),
+		previewImage(src) {
+			let array = []
+			array.push(src)
+			uni.previewImage({
+			  urls: array,
+			  current: array[0]
+			})
+		},
         sendMessage(msg, callback) {
             if (!msg.isFirst) {
                 msg.isFirst = 0
@@ -404,7 +412,7 @@ export default {
 							.map(item => {
 								this.currentChatFrame.groupMembers.forEach(member => {
 									if (member.userId == item.fromId) {
-										item.headPhoto = member.userPhoto
+										item.headPhoto = member.avatar
 										item.nickname = member.userNickname
 									}
 								})

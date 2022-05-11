@@ -241,6 +241,7 @@ export default {
 				},
 				success: (res) => {
 					if (res.data.code == 200 && res.data.data.groups != null) {
+						res.data = res.data.data
 						res.data.groups.forEach(g => {
 							let group = {
 								groupId: g.groupId,

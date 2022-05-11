@@ -3,7 +3,7 @@
         <view class="option">
             <view class="row margin-bottom10" style="padding:15px;">
                 <view class="display-flex">
-                    <image :src="currentChatFrame.chatObjectPhoto" mode="aspectFill" class="headPhoto"></image>
+                    <image :src="frontUrl+currentChatFrame.chatObjectPhoto" mode="aspectFill" class="headPhoto"></image>
                     <text v-text="currentChatFrame.nickname" style="line-height: 50px"></text>
                 </view>
             </view>

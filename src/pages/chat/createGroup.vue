@@ -9,7 +9,7 @@
 		<checkbox-group style="margin-bottom: 110rpx;" @change="checkboxChange">
 			<view v-for="(item, index) in friends" :key="item.friendId">
 				<view class="rowItem">
-					<image :src="item.headPhoto" class="leftImg"></image>
+					<image :src="frontUrl+item.headPhoto" class="leftImg"></image>
 					<text class="text" v-text="item.nickname"></text>
 					<checkbox :value="String(item.friendId)" :checked="item.checked" class="checkbox text"/>
 				</view>

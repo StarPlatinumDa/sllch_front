@@ -1,8 +1,8 @@
 <template>
-	<view>
-		<view v-for="(item, index) in groupMembers" :key="item.userId" :style="{ 'margin-top': statusBarHeight + 'px' }">
+	<view :style="{ 'margin-top': statusBarHeight + 'px' }">
+		<view v-for="(item, index) in groupMembers" :key="item.userId">
 			<view class="rowItem">
-				<image :src="item.userPhoto" class="leftImg"></image>
+				<image :src="frontUrl+item.avatar" class="leftImg"></image>
 				<text class="text" v-text="item.nickName"></text>
 			</view>
 		</view>
@@ -13,7 +13,7 @@
 	import { mapState } from 'vuex'
 	export default {
 		computed: {
-			...mapState(['currentChatFrame']),
+			...mapState(['currentChatFrame', 'frontUrl']),
 			groupMembers() {
 				console.log(this.currentChatFrame.groupMembers)
 				return this.currentChatFrame.groupMembers

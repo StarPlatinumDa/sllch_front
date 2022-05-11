@@ -34,7 +34,7 @@
 					<view :class="{rowItem:true, touchColor:item.isActive}"
 					@touchstart="touchFriend(true, index)"
 					@touchend="touchFriend(false, index)">
-						<image :src="item.headPhoto" class="leftImg"></image>
+						<image :src="frontUrl+item.headPhoto" class="leftImg"></image>
 						<text class="text" v-text="item.nickname"></text>
 					</view>
 				</view>
