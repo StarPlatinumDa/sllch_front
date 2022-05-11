@@ -9,7 +9,7 @@
 		<view>
 			<uni-row>
 				<uni-col :offset="2">
-					<text>病害等级</text>
+					<text>图片等级</text>
 				</uni-col>
 			</uni-row>
 			<uni-row>
@@ -38,15 +38,45 @@
 			<uni-row>
 				<uni-col :offset="2">
 					<text>备注信息</text>
+					<text 
+					style="font-size: 50%; color: #D8D8D8;"
+					>(删除标签请点击标签)</text>
+					<uni-icons 
+					type="plusempty" 
+					size="20"
+					style="margin-left: 250rpx;"
+					@click="addcomment"
+					></uni-icons>
+					<uni-popup ref="addlabel" type="dialog">
+						<uni-popup-dialog 
+						mode="input" 
+						title="标签信息" 
+						confirmText="添加标签"
+						cancelText="返回"
+						:duration="2000" 
+						@close="closecomment" 
+						@confirm="addlabel"
+						></uni-popup-dialog>
+					</uni-popup>
 				</uni-col>
 			</uni-row>
 			<div style="height: 1vh;"></div>
 			<uni-row>
-				<uni-col :offset="2">
+				<!-- <uni-col :offset="2">
 					<uni-easyinput 
 					v-model="comment" 
 					placeholder="可为空"
 					style="width: 85vw;"></uni-easyinput>
+				</uni-col> -->
+			</uni-row>
+			<uni-row style="margin: 0 70rpx;">
+				<uni-col :span="5"
+					v-for="(item, index) in this.comment">
+					<uni-tag 
+					:text="item" 
+					type="primary" 
+					:circle="true"
+					@click="cancellabel(item)"></uni-tag>
 				</uni-col>
 			</uni-row>
 			<div style="height: 2vh;"></div>
@@ -86,8 +116,8 @@
 			return {
 				level: 1,
 				location: "",
-				comment: "",
-				range: [{"value": 1,"text": "1级病害"},{"value": 2,"text": "2级病害"},{"value": 3,"text": "3级病害"}],
+				comment: [],
+				range: [{"value": 1,"text": "1级图片"},{"value": 2,"text": "2级图片"},{"value": 3,"text": "3级图片"}],
 				imagesrc: "",
 				damageType: 6,
 			}
@@ -96,9 +126,7 @@
 		  ...mapState(['forcedLogin', 'hasLogin', 'userName', 'userId', 'token', 'permissionLevel', 'frontUrl'])
 		},
 		onLoad(option) {
-			let n = option.imagesrc.length;
-			this.imagesrc = option.imagesrc.substr(1, n-2);
-			console.log(this.imagesrc)
+			this.imagesrc = option.imagesrc;
 		},
 		methods: {
 			clickicon() {
@@ -116,7 +144,7 @@
 					}
 				});
 			},
-			dialogConfirm() {	
+			dialogConfirm() {
 				let that = this;
 				uni.uploadFile({
 					url: that.frontUrl + '/common/upload',
@@ -136,7 +164,7 @@
 							},
 							data: {
 								"imagePerlevel": that.level,
-								"imageRemarks": that.comment,
+								"imageRemarks": that.comment.join('|'),
 								"imageShotplace": that.location,
 								"imageSrc": imageurl,
 								"imageIsdelete": 0,
@@ -157,6 +185,21 @@
 			},
 			submit() {
 				this.$refs.popup.open();
+			},
+			addcomment(){
+				this.$refs.addlabel.open();	
+			},
+			closecomment(){
+				this.$refs.addlabel.close();	
+			},
+			addlabel(value){
+				this.comment.push(value);
+			},
+			cancellabel(value){
+				const index = this.comment.indexOf(value);
+				if(index != -1){
+					this.comment.splice(index, 1);
+				}
 			}
 		}
 	}

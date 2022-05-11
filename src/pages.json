@@ -56,7 +56,7 @@
     {
       "path": "pages/home/result",
       "style": {
-        "navigationBarTitleText": "",
+        "navigationBarTitleText": "图像识别结果",
         "enablePullDownRefresh": false
       }
     },

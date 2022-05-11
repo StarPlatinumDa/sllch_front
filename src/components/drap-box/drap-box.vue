@@ -4,7 +4,7 @@
 			<!-- 组件头部 -->
 			<view class="select_header" @click="showDownMenu">
 				<!-- 提示文字部分 -->
-				<text class="select_text">{{option}}</text>
+				<text class="select_text">{{this.option}}</text>
 				<!-- 图标 -->
 				<uni-icons class="select_drop" type="bottom" size="30"></uni-icons>
 			</view>
@@ -12,9 +12,9 @@
 			<view class="select_contents" v-show="showMenu">
 				<view 
 				class="select_constent"
-				@click="selectChonice(option)"
-				v-for="(item, index) in list">
-					<text class="select_text">{{item.label}}</text>
+				v-for="(item, index) in list"
+				@click="selectChonice(list[index])">
+					<text class="select_text" >{{list[index].label}}</text>
 				</view>
 			</view>
 		</view>
@@ -34,10 +34,11 @@
 				showDownMenu: function (){
 					this.showMenu = !this.showMenu
 				},
-				selectChonice: function(option) {
-					this.option = option.label;
+				selectChonice: function(list) {
+					console.log(list)
+					this.option = list.label;
 					this.showMenu = false;
-					this.$emit("returnDat", this.option);
+					this.$emit("returnDat", list.label);
 				},
 	  		},
 	}
