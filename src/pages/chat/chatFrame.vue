@@ -15,7 +15,7 @@
 							<text v-text="item.playTime"></text>
 						</view>
 						<view class="float-right imgContainer overflow-hidden" v-else-if="item.newsType == 'img'">
-							<image :src="item.msg" mode="widthFix" @touchend="previewImage(item.msg)" class="newsImg"></image>
+							<image :src="frontUrl + item.msg" mode="widthFix" @touchend="previewImage(item.msg)" class="newsImg"></image>
 						</view>
 					</view>
                     
@@ -33,7 +33,7 @@
 							<text v-text="item.playTime"></text>
 						</view>
 						<view class="float-left imgContainer overflow-hidden" v-else-if="item.newsType == 'img'">
-							<image :src="item.msg" mode="widthFix" @touchend="previewImage(item.msg)" class="newsImg"></image>
+							<image :src="frontUrl + item.msg" mode="widthFix" @touchend="previewImage(item.msg)" class="newsImg"></image>
 						</view>
 					</view>
                 </view>
@@ -141,6 +141,7 @@ export default {
     methods: {
         ...mapMutations(['setNews', 'setChatFrames']),
 		previewImage(src) {
+			src = this.frontUrl + src
 			let array = []
 			array.push(src)
 			uni.previewImage({
@@ -309,7 +310,7 @@ export default {
         },
         playVoice(voicePath) {
             if (voicePath) {
-                this.innerAudioContext.src = voicePath
+                this.innerAudioContext.src = this.frontUrl + voicePath
                 this.innerAudioContext.play()
             }
         },
@@ -563,6 +564,7 @@ export default {
 .newsImg {
 	width: 250rpx;
 	height: auto;
+	border-radius: 5rpx;
 }
 
 .imgContainer {

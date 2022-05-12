@@ -12,7 +12,7 @@
             @click="enterChatFrame(item.chatId, item.chatType)">
                 <view class="image">
                     <image v-if="item.chatType == 0" mode="aspectFill" :src="frontUrl+item.chatObjectPhoto"></image>
-					<image v-else mode="aspectFill" :src="item.groupPhoto"></image>
+					<image v-else mode="aspectFill" :src="frontUrl + item.groupPhoto"></image>
                 </view>
                 <view class="content">
                     <view>
