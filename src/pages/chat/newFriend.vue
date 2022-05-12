@@ -4,7 +4,7 @@
 			<view v-if="verificationType == 0">
 				<view v-for="(item, index) in friendVerifications" :key="item.fromId + '' + item.toId + index">
 					<view class="rowItem">
-						<image :src="item.headPhoto" class="leftImg"></image>
+						<image :src="frontUrl + item.headPhoto" class="leftImg"></image>
 						<text class="text" v-text="item.nickname"></text>
 						<view v-if="item.fromId == userId" class="rightContent">
 							<text v-if="item.verificationStatus == 0">等待验证</text>
@@ -25,7 +25,7 @@
 			<view v-else>
 				<view v-for="(item, index) in groupVerifications" :key="item.fromId + '' + item.toId + index + item.groupId">
 					<view class="rowItem">
-						<image v-if="item.fromId == userId" :src="item.groupPhoto" class="leftImg"></image>
+						<image v-if="item.fromId == userId" :src="frontUrl + item.groupPhoto" class="leftImg"></image>
 						<image v-else :src="item.headPhoto" class="leftImg"></image>
 						<text v-if="item.fromId == userId" class="text" v-text="item.groupName"></text>
 						<text v-else class="text" v-text="item.nickname"></text>
@@ -199,7 +199,7 @@ export default {
     text-align: center;
     font-size: 20px;
     background-color: rgb(0,170,254);
-    padding: 3% 11px;
+    padding: 11px 3%;
     position: fixed;
     width: 94%;
     color: white;

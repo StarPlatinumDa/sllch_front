@@ -239,7 +239,7 @@ export default {
     text-align: center;
     font-size: 20px;
     background-color: rgb(0,170,254);
-    padding: 3% 11px;
+    padding: 11px 3%;
     position: fixed;
     width: 94%;
     color: white;

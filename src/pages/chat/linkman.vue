@@ -44,7 +44,7 @@
 					<view :class="{rowItem:true, touchColor:item.isActive}"
 					@touchstart="touchGroup(true, index)"
 					@touchend="touchGroup(false, index)">
-						<image :src="item.groupPhoto" class="leftImg"></image>
+						<image :src="frontUrl + item.groupPhoto" class="leftImg"></image>
 						<text class="text" v-text="item.groupName"></text>
 					</view>
 				</view>

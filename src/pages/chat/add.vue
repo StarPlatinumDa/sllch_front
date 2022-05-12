@@ -4,7 +4,7 @@
 			<uni-search-bar :radius="100" v-model="searchContent" @confirm="search" :placeholder="searchPlaceholder"></uni-search-bar>
 			<view v-if="type == 0">
 				<view class="rowItem" v-for="item in searchUsers" :key="item.userId">
-				    <image :src="item.userPhoto" class="leftImg"></image>
+				    <image :src="frontUrl + item.userPhoto" class="leftImg"></image>
 				    <text class="text" v-text="item.userNickname"></text>
 					<button class="addBtn" @click="addFriend(item)" v-if="item.type == 2">添加</button>
 					<text class="rightText" v-else-if="item.type == 1">等待验证</text>
@@ -12,7 +12,7 @@
 			</view>
 			<view v-if="type == 1">
 				<view class="rowItem" v-for="item in searchGroups" :key="item.userId">
-				    <image :src="item.groupPhoto" class="leftImg"></image>
+				    <image :src="frontUrl + item.groupPhoto" class="leftImg"></image>
 				    <text class="text" v-text="item.groupName"></text>
 					<button class="addBtn" @click="addGroup(item)" v-if="item.type == 2">添加</button>
 					<text class="rightText" v-else-if="item.type == 1">等待验证</text>
@@ -225,6 +225,8 @@ export default {
 		    if (callback) callback()
 		},
 		search() {
+			this.searchGroups = []
+			this.searchUser = []
 			if (this.type == 0) this.searchUser()
 			else this.searchGroup()
 		},
@@ -342,7 +344,7 @@ export default {
     text-align: center;
     font-size: 20px;
     background-color: rgb(0,170,254);
-    padding: 3% 11px;
+    padding: 11px 3%;
     position: fixed;
     width: 94%;
     color: white;
