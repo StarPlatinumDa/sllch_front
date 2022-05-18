@@ -39,6 +39,9 @@
 </template>
 
 <script>
+import {
+  mapState
+} from 'vuex'
 export default {
   data() {
     return {
@@ -47,6 +50,9 @@ export default {
       diseasetype: '正在识别中……',
       detectionLabel: ''
     }
+  },
+  computed: {
+    ...mapState(['classificationUrl', 'detectionUrl'])
   },
   onLoad(option) {
     let n = option.imagesrc.length;
@@ -72,7 +78,7 @@ export default {
     //  图像识别模块
     preImage() {
       uni.uploadFile({
-        url: 'http://127.0.0.1:5000/swinimg',
+        url: this.detectionUrl + '/swinimg',
         header: {
           'Context-Type': "multipart/form-data"
         },
@@ -89,7 +95,7 @@ export default {
 	// 图像分类模块
 	classificationImage() {
 		uni.uploadFile({
-		  url: 'http://127.0.0.1:5000/classification',
+		  url: this.classificationUrl + '/classification',
 		  header: {
 		    'Context-Type': "multipart/form-data"
 		  },
