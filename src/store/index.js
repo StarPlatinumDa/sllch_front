@@ -36,8 +36,8 @@ const store = new Vuex.Store({
             state.userName = user.userName || '';
             state.userId = user.userId || '';
             state.token = user.token || '';
-			state.avatar = user.avatar;
-			state.nickname = user.nickname;
+            state.avatar = user.avatar;
+            state.nickname = user.nickname;
             state.permissionLevel = user.permissionLevel || '';
         },
         logout(state) {
@@ -50,24 +50,24 @@ const store = new Vuex.Store({
                 key: 'token'
             })
         },
-		setChatFrames(state, chatFrames) {
-			state.chatFrames = chatFrames;
-		},
-		setNews(state, news) {
-			state.news = news;
-		},
-		setCurrentChatFrame(state, currentChatFrame) {
-			state.currentChatFrame = currentChatFrame;
-		},
-		setFriends(state, friends) {
-			state.friends = friends;
-		},
-		setVerifications(state, verifications) {
-			state.verifications = verifications;
-		},
-		setNews(state, news) {
-			state.news = news;
-		}
+        setChatFrames(state, chatFrames) {
+            state.chatFrames = chatFrames;
+        },
+        setNews(state, news) {
+            state.news = news;
+        },
+        setCurrentChatFrame(state, currentChatFrame) {
+            state.currentChatFrame = currentChatFrame;
+        },
+        setFriends(state, friends) {
+            state.friends = friends;
+        },
+        setVerifications(state, verifications) {
+            state.verifications = verifications;
+        },
+        setNews(state, news) {
+            state.news = news;
+        }
     },
     actions: {},
     // getters: {

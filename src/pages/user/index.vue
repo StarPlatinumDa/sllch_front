@@ -53,7 +53,7 @@
       </uni-popup>
     </view>
 
-    <view style="height: 50px;">
+    <view style="height: 100px;">
 
     </view>
 
