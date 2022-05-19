@@ -10,7 +10,10 @@
 					placeholder="请输入检索文本" />
 				</uni-col>
 				<uni-col :span="3">
-					<uni-icons type="image" size="40"></uni-icons>
+					<uni-icons 
+					type="image" 
+					size="40"
+					@click="searchimgbyimg"></uni-icons>
 				</uni-col>
 			</uni-row>
 			<uni-row class="demo-uni-row" :gutter="20">
@@ -44,9 +47,9 @@
 			</uni-row>
 			<uni-grid :column="3" ref='imgs' :showBorder="false" :square="false">
 				<img
-					style="width: 31.6%; padding: 5rpx;"
+					style="width: 32.2%; padding: 5rpx;"
 					v-for="(composingImg, index) in composingImgs" 
-					:src="composingImg.image_src"
+					:src="composingImg.imageSrc"
 					ref="img"
 					v-on:click="toPictureDetail(composingImg)"
 					alt="无法显示图片" />
@@ -96,47 +99,22 @@
 				}],
 				beginTime:'',
 				endTime:'',
-				composingImgs:[{
-					image_id:1,
-					image_typeid:1,
-					image_src:'static/composing/2.jpg',
-					image_createtime:'2022-11-01',
-					image_isdelete:1,
-					image_remarks:'无',
-					user_id:1,
-					Image_perlevel:1
-				},{
-					image_id:1,
-					image_typeid:1,
-					image_src:'static/composing/3.jpg',
-					image_createtime:'2022-11-01',
-					image_isdelete:1,
-					image_remarks:'无',
-					user_id:1,
-					Image_perlevel:1
-				},{
-					image_id:1,
-					image_typeid:1,
-					image_src:'static/composing/3.jpg',
-					image_createtime:'2022-11-01',
-					image_isdelete:1,
-					image_remarks:'无',
-					user_id:1,
-					Image_perlevel:1
-				},{
-					image_id:1,
-					image_typeid:1,
-					image_src:'static/composing/3.jpg',
-					image_createtime:'2022-11-01',
-					image_isdelete:1,
-					image_remarks:'无',
-					user_id:1,
-					Image_perlevel:1
-				}],
-				
+				composingImgs:[],
+				imagesrc:''
 			}
 		},
 		onLoad() {
+			uni.request({
+				url:this.frontUrl + '/imageInfo/imagemanage/list',
+				method:'GET',
+				header: {
+					'Authorization': this.token
+				},
+				success:(res) =>{
+					this.composingImgs = res.data.rows
+					console.log(this.composingImgs)
+				}
+			})
 		},
 		onReady() {
 			this.setImages()
@@ -173,19 +151,35 @@
 				})
 			},
 			setImages() {
-				// console.log(this.$refs['img'].length)
-				// for (let i=0; i<this.$refs['img'].length; i++) {
-				// 	let mr = '2%'
-				// 	if ((i + 1) % 3 === 0) {
-				// 		mr = '0'
-				// 	}
-				// 	this.$refs['img'][i].style.marginRight = mr
-				// 	this.$refs['img'][i].style.marginTop = '10px'
-				// }
 			},
-			
-			getimagefromimage() {
-				
+			searchimgbyimg() {
+				uni.chooseImage({
+					count:1,
+					sourceType:['album'],
+					crop:{
+						quality:40
+					},
+					success:(res) => {
+						let imagesrc = JSON.stringify(res.tempFilePaths[0]);
+						let n = imagesrc.length
+						imagesrc = imagesrc.substr(1, n - 2);
+						console.log(imagesrc)
+						uni.uploadFile({
+						  url: 'http://127.0.0.1:5000/getimage',
+						  header: {
+						    'Context-Type': "multipart/form-data"
+						  },
+						  filePath: imagesrc,
+						  name: "img",
+						  success: ((res) => {
+						    console.log(res)
+						  }),
+						  fail:(res)=>{
+							console.log(res)
+						  }
+						})
+					}
+				})
 			}
 		}
 	}

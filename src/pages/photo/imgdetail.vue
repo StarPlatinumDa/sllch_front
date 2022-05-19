@@ -4,7 +4,7 @@
 				<view class="picture">
 					<img
 					style=" width: 100%;height:480rpx;padding: 0px;"
-					:src="this.imgdtail.image_src" 
+					:src="this.imgdtail.imageSrc" 
 					alt="无法显示图片">
 				</view>
 		</uni-row>
@@ -15,7 +15,7 @@
 		>
 			<uni-col :span="6" class="card">
 				<uni-row>
-					<text class="value">{{this.imgdtail.image_typeid}}</text>
+					<text class="value">{{this.disType[this.imgdtail.imageTypeid]}}</text>
 				</uni-row>
 				<uni-row>
 					<text class="key">病害类型</text>
@@ -24,7 +24,7 @@
 			</uni-col >
 			<uni-col :span="6" class="card">
 				<uni-row>
-					<text class="value">{{this.imgdtail.Image_perlevel}}级图片</text>
+					<text class="value">{{this.imgdtail.imagePerlevel}}级</text>
 				</uni-row>
 				<uni-row>
 					<text class="key">图片等级</text>
@@ -32,7 +32,7 @@
 			</uni-col>
 			<uni-col :span="10" class="card">
 				<uni-row>
-					<text class="value">{{this.imgdtail.image_createtime}}</text>
+					<text class="value">{{this.imgdtail.imageCreatetime}}</text>
 				</uni-row>
 				<uni-row>
 					<text class="key">拍摄时间</text>
@@ -47,7 +47,7 @@
 				</uni-row>
 				<uni-row>
 					<uni-col :offset="2">
-						{{this.imgdtail.image_shotplace}}
+						{{this.imgdtail.imageShotplace}}
 					</uni-col>
 				</uni-row>
 			</uni-col>
@@ -60,7 +60,7 @@
 				</uni-row>
 				<uni-row>
 					<uni-col :offset="2">
-						{{this.imgdtail.user_id}}
+						{{this.imgdtail.userId}}
 					</uni-col>
 				</uni-row>
 			</uni-col>
@@ -69,11 +69,11 @@
 		<uni-row class="demo-uni-row">
 			<uni-col>
 				<uni-row style="margin-left: 20rpx;">
-					备注信息:
+					图片标签:
 				</uni-row>
 				<uni-row style="margin: 0 50rpx;">
 					<uni-col :span="5"
-					v-for="(item, index) in this.imgdtail.remarklist">
+					v-for="(item, index) in this.imgdtail.imageRemarks">
 						<uni-tag 
 						:text="item" 
 						type="primary" 
@@ -91,20 +91,31 @@
 		data() {
 			return {
 				gutter: 0,
+				nickname: '',
 				imgdtail:{
-					// image_id:1,
-					// image_typeid:1,
-					// image_src:'static/composing/2.jpg',
-					// image_createtime:'2022-11-01',
-					// image_isdelete:1,
-					// image_remarks:'渗水|漏水|渗漏',
-					// user_id:1,
-					// image_shotplace:"重庆市渝北区"
+				},
+				disType: {
+					1:"裂缝",
+					2:'剥落',
+					3:"露筋",
+					4:"渗水",
+					6:"无",
 				}
 			}
 		},
 		onLoad(option) {
 			this.imgdtail = JSON.parse(option.imgdtail)
+			console.log(this.imgdtail)
+			// uni.request({
+			// 	url:this.frontUrl + '/system/user/' + this.imgdtail.userId,
+			// 	method:'GET',
+			// 	header: {
+			// 		'Authorization': this.token
+			// 	},
+			// 	success:(res) =>{
+			// 		console.log(res)
+			// 	}
+			// })
 		},
 		methods: {
 			
