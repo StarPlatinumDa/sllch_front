@@ -26,7 +26,7 @@
 				<view v-for="(item, index) in groupVerifications" :key="item.fromId + '' + item.toId + index + item.groupId">
 					<view class="rowItem">
 						<image v-if="item.fromId == userId" :src="frontUrl + item.groupPhoto" class="leftImg"></image>
-						<image v-else :src="item.headPhoto" class="leftImg"></image>
+						<image v-else :src="frontUrl + item.headPhoto" class="leftImg"></image>
 						<text v-if="item.fromId == userId" class="text" v-text="item.groupName"></text>
 						<text v-else class="text" v-text="item.nickname"></text>
 						<view v-if="item.fromId == userId" class="rightContent">

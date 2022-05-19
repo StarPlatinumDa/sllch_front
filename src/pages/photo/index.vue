@@ -46,7 +46,7 @@
 				<img
 					style="width: 31.6%; padding: 5rpx;"
 					v-for="(composingImg, index) in composingImgs" 
-					:src="composingImg.image_src"
+					:src="composingImg.imageSrc"
 					ref="img"
 					v-on:click="toPictureDetail(composingImg)"
 					alt="无法显示图片" />
