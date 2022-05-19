@@ -39,14 +39,20 @@
 </template>
 
 <script>
+import {
+  mapState
+} from 'vuex'
 export default {
   data() {
     return {
       imagesrc: 'static/composing/2.jpg',
       predictImgUrl: '',
-      diseasetype: '渗水',
+      diseasetype: '正在识别中……',
       detectionLabel: ''
     }
+  },
+  computed: {
+    ...mapState(['classificationUrl', 'detectionUrl'])
   },
   onLoad(option) {
     let n = option.imagesrc.length;
@@ -55,7 +61,8 @@ export default {
     else
       this.imagesrc = option.imagesrc.substr(1, n - 2);
 
-    this.preImage()
+    this.preImage();
+	this.classificationImage();
   },
   methods: {
     toconfirm() {
@@ -71,7 +78,7 @@ export default {
     //  图像识别模块
     preImage() {
       uni.uploadFile({
-        url: 'http://127.0.0.1:5000/swinimg',
+        url: this.detectionUrl + '/swinimg',
         header: {
           'Context-Type': "multipart/form-data"
         },
@@ -85,6 +92,22 @@ export default {
         })
       })
     },
+	// 图像分类模块
+	classificationImage() {
+		uni.uploadFile({
+		  url: this.classificationUrl + '/classification',
+		  header: {
+		    'Context-Type': "multipart/form-data"
+		  },
+		  filePath: this.imagesrc,
+		  name: "img",
+		  success: (result => {
+		    let data = JSON.parse(result.data)
+		    this.diseasetype = data.label
+		    console.log(data.label)
+		  })
+		})
+	},
     previewImage(src) {
       console.log('image')
       console.log(src)

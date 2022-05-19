@@ -12,7 +12,9 @@ const store = new Vuex.Store({
         token: '',
         permissionLevel: '2',
         password: '123456',
-        frontUrl:'http://192.168.2.6:8080',
+        frontUrl:'http://localhost:8080',
+		classificationUrl: 'http://127.0.0.1:5000',
+		detectionUrl: 'http://127.0.0.1:5000',
 		mySocket: {
 		    socketTask: null,
 		    socketOpen: false,
