@@ -103,7 +103,7 @@
 				imagesrc:''
 			}
 		},
-		onLoad() {
+		onShow() {
 			uni.request({
 				url:this.frontUrl + '/imageInfo/imagemanage/list',
 				method:'GET',
@@ -112,7 +112,6 @@
 				},
 				success:(res) =>{
 					this.composingImgs = res.data.rows
-					console.log(this.composingImgs)
 				}
 			})
 		},
@@ -120,7 +119,7 @@
 			this.setImages()
 		},
 		computed: {
-			...mapState(['userId', 'token', 'frontUrl'])
+			...mapState(['userId', 'token', 'frontUrl', 'classificationUrl'])
 		},
 		methods: {
 			toPictureDetail: function(composingImg) {
@@ -156,23 +155,33 @@
 				uni.chooseImage({
 					count:1,
 					sourceType:['album'],
-					crop:{
-						quality:40
-					},
+					sizeType:['original'],
 					success:(res) => {
-						let imagesrc = JSON.stringify(res.tempFilePaths[0]);
-						let n = imagesrc.length
-						imagesrc = imagesrc.substr(1, n - 2);
-						console.log(imagesrc)
+						this.imagesrc = JSON.stringify(res.tempFilePaths[0]);
+						let n = this.imagesrc.length
+						this.imagesrc = this.imagesrc.substr(1, n - 2)
 						uni.uploadFile({
-						  url: 'http://127.0.0.1:5000/getimage',
+						  url: this.classificationUrl + '/getimage',
 						  header: {
 						    'Context-Type': "multipart/form-data"
 						  },
-						  filePath: imagesrc,
+						  filePath: this.imagesrc,
 						  name: "img",
 						  success: ((res) => {
-						    console.log(res)
+							res = JSON.parse(res.data)
+							this.composingImgs = []
+							res.forEach((imageinfo) =>{
+								this.composingImgs.push({
+									imageId: imageinfo[0],
+									imageTypeid: imageinfo[1],
+									imageSrc: imageinfo[2],
+									imageCreatetime: imageinfo[3],
+									imageShotplace: imageinfo[4],
+									imagePerlevel: imageinfo[5],
+									imageRemarks: imageinfo[7],
+									userId:imageinfo[8]
+								})
+							})
 						  }),
 						  fail:(res)=>{
 							console.log(res)

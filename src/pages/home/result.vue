@@ -39,28 +39,43 @@
 </template>
 
 <script>
+import {
+  mapState
+} from 'vuex'
+import { translateapp } from '../../static/compress.js'
 export default {
   data() {
     return {
-      imagesrc: 'static/composing/2.jpg',
-      predictImgUrl: '',
-      diseasetype: '渗水',
-      detectionLabel: ''
+		disType: {
+			"裂缝":1,
+			'剥落':2,
+			"露筋":3,
+			"渗水":4,
+			"正在识别中……":6,
+		},
+        imagesrc: '',
+		swinImagesrc:'',
+        predictImgUrl: '',
+        diseasetype: '正在识别中……',
+        detectionLabel: ''
     }
+  },
+  computed: {
+    ...mapState(['classificationUrl', 'detectionUrl'])
   },
   onLoad(option) {
     let n = option.imagesrc.length;
     if (option.tratype == 1)
       this.imagesrc = option.imagesrc;
     else
-      this.imagesrc = option.imagesrc.substr(1, n - 2 );
-	  console.log(this.imagesrc)
-    this.preImage()
+      this.imagesrc = option.imagesrc.substr(1, n - 2);
+	 this.preImage();
+	this.classificationImage();
   },
   methods: {
     toconfirm() {
       uni.navigateTo({
-        url: `/pages/home/confirm?imagesrc=${this.imagesrc}`
+        url: `/pages/home/confirm?imagesrc=${this.imagesrc}&damageType=${this.disType[this.diseasetype]}`
       })
     },
     backtohome() {
@@ -70,8 +85,10 @@ export default {
     },
     //  图像识别模块
     preImage() {
+		console.log(this.imagesrc)
+		console.log(this.detectionUrl + '/swinimg')
       uni.uploadFile({
-        url: 'http://127.0.0.1:5000/swinimg',
+        url: this.detectionUrl + '/swinimg',
         header: {
           'Context-Type': "multipart/form-data"
         },
@@ -80,11 +97,28 @@ export default {
         success: (result => {
           let data = JSON.parse(result.data)
           this.detectionLabel = data.label
-          console.log(data.label)
+          console.log(data.label[0])
+		  
           this.predictImgUrl = 'data:image/jpeg;base64,' + data.img
         })
       })
     },
+	// 图像分类模块
+	classificationImage() {
+		uni.uploadFile({
+		  url: this.classificationUrl + '/classification',
+		  header: {
+		    'Context-Type': "multipart/form-data"
+		  },
+		  filePath: this.imagesrc,
+		  name: "img",
+		  success: (result => {
+		    let data = JSON.parse(result.data)
+		    this.diseasetype = data.label
+		    console.log(data.label)
+		  })
+		})
+	},
     previewImage(src) {
       console.log('image')
       console.log(src)

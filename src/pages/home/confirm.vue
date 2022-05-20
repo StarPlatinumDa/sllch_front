@@ -120,13 +120,20 @@
 				range: [{"value": 1,"text": "1级图片"},{"value": 2,"text": "2级图片"},{"value": 3,"text": "3级图片"}],
 				imagesrc: "",
 				damageType: 6,
+				fixedLabel:{
+					1:['裂缝', '缝隙', '缝', '裂痕'],
+					2:['剥落', '脱落'],
+					3:['露筋'],
+					4:['渗水', '漏水', '渗漏'],
+				},
 			}
 		},
 		computed: {
-		  ...mapState(['forcedLogin', 'hasLogin', 'userName', 'userId', 'token', 'permissionLevel', 'frontUrl'])
+		  ...mapState(['forcedLogin', 'hasLogin', 'userName', 'userId', 'token', 'permissionLevel', 'frontUrl', 'classificationUrl'])
 		},
 		onLoad(option) {
 			this.imagesrc = option.imagesrc;
+			this.damageType = option.damageType;
 		},
 		methods: {
 			clickicon() {
@@ -155,7 +162,11 @@
 					filePath: that.imagesrc,
 					name: "file",
 					success: (res) => {
+						//上传图片成功添加进数据库
 						let imageurl = JSON.parse(res.data).url;
+						that.fixedLabel[that.damageType].forEach((res)=>{
+							that.comment.push(res);
+						})
 						uni.request({
 							url: that.frontUrl + '/imageInfo/imagemanage',
 							method: 'POST',
@@ -173,7 +184,27 @@
 								"imageTypeid": that.damageType,
 							},
 							fail: (res) => {
+								console.log(res)
 								that.$refs.message.open();
+							},
+							success: (res) => {
+								//添加数据库成功后添加标识符
+								uni.uploadFile({
+								  url: this.classificationUrl + '/savedis',
+								  header: {
+								    'Context-Type': "multipart/form-data"
+								  },
+								  filePath: this.imagesrc,
+								  name: "img",
+								  success: ((res) => {
+								  }),
+								  fail:(res)=>{
+									console.log(res)
+								  }
+								})
+								uni.switchTab({
+								  url: '/pages/home/index'
+								})
 							}
 						})
 					},

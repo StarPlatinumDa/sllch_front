@@ -152,7 +152,7 @@ export default {
     getImageList() {
       new Promise((resolve, reject) => {
         uni.request({
-          url: this.frontUrl + '/imageInfo/imagemanage/list',
+          url: this.frontUrl + '/imageInfo/imagemanage/listById',
           method: 'GET',
           header: {
             'Authorization': this.token

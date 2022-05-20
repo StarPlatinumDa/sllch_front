@@ -43,9 +43,7 @@
 				uni.chooseImage({
 					count:1,
 					sourceType:['album'],
-					crop:{
-						quality:40
-					},
+					sizeType:['original'],
 					success:function(res){
 						this.imagesrc = JSON.stringify(res.tempFilePaths[0])
 						uni.navigateTo({

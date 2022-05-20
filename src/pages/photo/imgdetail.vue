@@ -96,7 +96,7 @@
 				},
 				disType: {
 					1:"裂缝",
-					2:'剥落',
+					2:'脱落',
 					3:"露筋",
 					4:"渗水",
 					6:"无",
@@ -105,17 +105,17 @@
 		},
 		onLoad(option) {
 			this.imgdtail = JSON.parse(option.imgdtail)
-			console.log(this.imgdtail)
-			// uni.request({
-			// 	url:this.frontUrl + '/system/user/' + this.imgdtail.userId,
-			// 	method:'GET',
-			// 	header: {
-			// 		'Authorization': this.token
-			// 	},
-			// 	success:(res) =>{
-			// 		console.log(res)
-			// 	}
-			// })
+			this.imgdtail.imageRemarks = this.imgdtail.imageRemarks.split('|')
+			uni.request({
+				url:this.frontUrl + '/system/user/' + this.imgdtail.userId,
+				method:'GET',
+				header: {
+					'Authorization': this.token
+				},
+				success:(res) =>{
+					console.log(res)
+				}
+			})
 		},
 		methods: {
 			
