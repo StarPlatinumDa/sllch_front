@@ -186,7 +186,8 @@ export default {
 								groupName: this.groups[index].groupName,
 								groupMembers: res.data.users,
 								groupId: this.groups[index].groupId,
-								ownerId: this.groups[index].ownerId
+								ownerId: this.groups[index].ownerId,
+								chatObjectPhoto: this.frontUrl + '/profile/defaultGroupPhoto.png'
 							})
 							uni.navigateTo({
 							    url: '/pages/chat/chatFrame'
