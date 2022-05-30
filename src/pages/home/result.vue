@@ -9,10 +9,16 @@
       <text style="float: left; margin: 0 30rpx;">识别结果：</text>
       <text>{{ this.diseasetype }}</text>
     </view>
+	<img
+	v-show = "isLoading"
+	class="image"
+	:src="this.loadingImg" 
+	alt="加载图片加载失败">
     <img
+		v-show = "!isLoading"
         class="image"
         :src="this.predictImgUrl"
-        alt=""
+        alt="图片加载失败"
         @click="previewImage(this.predictImgUrl)"
     >
     <uni-row
@@ -54,6 +60,8 @@ export default {
 			"正在识别中……":6,
 		},
         imagesrc: '',
+		isLoading: true,
+		loadingImg: 'static/img/loading.gif',
 		swinImagesrc:'',
         predictImgUrl: '',
         diseasetype: '正在识别中……',
@@ -98,9 +106,11 @@ export default {
           let data = JSON.parse(result.data)
           this.detectionLabel = data.label
           console.log(data.label[0])
-		  
           this.predictImgUrl = 'data:image/jpeg;base64,' + data.img
-        })
+        }),
+		complete:()=>{
+		  this.isLoading = false;
+		}
       })
     },
 	// 图像分类模块

@@ -45,7 +45,11 @@
 					</view>
 				</uni-col>
 			</uni-row>
-			<uni-grid :column="3" ref='imgs' :showBorder="false" :square="false">
+			<uni-grid
+			v-show="!isLoading"
+			 :column="3" ref='imgs' 
+			 :showBorder="false" 
+			 :square="false">
 				<img
 					style="width: 32.2%; padding: 5rpx;"
 					v-for="(composingImg, index) in composingImgs" 
@@ -54,6 +58,12 @@
 					v-on:click="toPictureDetail(composingImg)"
 					alt="无法显示图片" />
 			</uni-grid>
+			<img 
+			v-show="isLoading"
+			:src="this.loadingImg" 
+			alt="加载icon未实现"
+			style="width: 100%; height: 40%;"
+			>
 		</view>
 	</view>
 </template>
@@ -69,11 +79,10 @@
 		data() {
 			return {
 				query: '',
+				isLoading: false,
+				loadingImg:'static/img/loading.gif',
 				defaultType:'病害类型',
 				diseaseType: [{
-				  value: '裂缝',
-				  label: '裂缝'
-				}, {
 				  value: '脱落',
 				  label: '脱落'
 				}, {
@@ -93,9 +102,6 @@
 				},{
 					value: 3,
 					label: '等级3'
-				},{
-					value: 4,
-					label: '等级4'
 				}],
 				beginTime:'',
 				endTime:'',
@@ -145,11 +151,8 @@
 				    success: (res) => {
 						let data = res.data
 						this.composingImgs = data.data
-						this.setImages()
 				    }
 				})
-			},
-			setImages() {
 			},
 			searchimgbyimg() {
 				uni.chooseImage({
@@ -157,6 +160,7 @@
 					sourceType:['album'],
 					sizeType:['original'],
 					success:(res) => {
+						this.isLoading = true;
 						this.imagesrc = JSON.stringify(res.tempFilePaths[0]);
 						let n = this.imagesrc.length
 						this.imagesrc = this.imagesrc.substr(1, n - 2)
@@ -185,6 +189,9 @@
 						  }),
 						  fail:(res)=>{
 							console.log(res)
+						  },
+						  complete:()=>{
+							  this.isLoading = false;
 						  }
 						})
 					}

@@ -135,13 +135,13 @@
         "pagePath": "pages/home/index",
         "iconPath": "static/icon/home1.png",
         "selectedIconPath": "static/icon/home2.png",
-        "text": "首页"
+        "text": "分类识别"
       },
       {
         "pagePath": "pages/photo/index",
         "iconPath": "static/icon/photo1.png",
         "selectedIconPath": "static/icon/photo2.png",
-        "text": "相册"
+        "text": "图像检索"
       },
       {
         "pagePath": "pages/chat/index",
