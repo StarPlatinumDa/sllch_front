@@ -70,7 +70,6 @@ export default {
         // })
       })
     } else {
-      console.log('我服了')
       setTimeout(() => {
         uni.switchTab({
           url: '/pages/user/index'
@@ -112,9 +111,9 @@ export default {
             },
             data: temp,
             success: (res) => {
-              console.log(res.data)
+              // console.log(res.data)
               if (res.data.code == 200) {
-                console.log(res.data.token)
+                // console.log(res.data.token)
                 this.msgType = 'success'
                 this.messageText = `登陆成功！`
                 this.$refs.message.open()
@@ -129,7 +128,7 @@ export default {
                   key: 'token',
                   data: res.data.token
                 })
-                console.log('起飞！')
+                // console.log('起飞！')
                 resolve()
               } else {
                 uni.showToast({
