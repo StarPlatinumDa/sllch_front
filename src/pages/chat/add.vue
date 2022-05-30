@@ -226,7 +226,7 @@ export default {
 		},
 		search() {
 			this.searchGroups = []
-			this.searchUser = []
+			this.searchUsers = []
 			if (this.type == 0) this.searchUser()
 			else this.searchGroup()
 		},

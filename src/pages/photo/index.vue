@@ -121,9 +121,6 @@
 				}
 			})
 		},
-		onReady() {
-			this.setImages()
-		},
 		computed: {
 			...mapState(['userId', 'token', 'frontUrl', 'classificationUrl'])
 		},

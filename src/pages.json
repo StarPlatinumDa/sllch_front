@@ -60,64 +60,78 @@
         "enablePullDownRefresh": false
       }
     },
-	{
-	  "path": "pages/home/confirm",
-	  "style": {
-	    "navigationBarTitleText": "",
-	    "enablePullDownRefresh": false
-	  }
-	},
-	{
-	  "path": "pages/chat/chatFrame",
-	  "style": {
-	  	"app-plus": {
-			"titleNView": false,
-			"softinputMode": "adjustResize"
-		}
-	  }
-	},
-	{
-	  "path": "pages/chat/linkman",
-	  "style": {
-	  	"app-plus": {"titleNView": false}
-	  }
-	},
-	{
-		"path": "pages/chat/newFriend",
-		"style": {
-			"app-plus": {"titleNView": false}
-		}
-	},
-	{
-		"path": "pages/chat/add",
-		"style": {
-			"app-plus": {"titleNView": false}
-		}
-	},
-	{
-		"path": "pages/chat/createGroup",
-		"style": {
-			"app-plus": {"titleNView": false}
-		}
-	},
-	{
-		"path": "pages/chat/manage",
-		"style": {
-			"app-plus": {"titleNView": false}
-		}
-	},
-	{
-		"path": "pages/chat/groupManage",
-		"style": {
-			"app-plus": {"titleNView": false}
-		}
-	},
-	{
-		"path": "pages/chat/members",
-		"style": {
-			"app-plus": {"titleNView": false}
-		}
-	}
+    {
+      "path": "pages/home/confirm",
+      "style": {
+        "navigationBarTitleText": "",
+        "enablePullDownRefresh": false
+      }
+    },
+    {
+      "path": "pages/chat/chatFrame",
+      "style": {
+        "app-plus": {
+          "titleNView": false,
+          "softinputMode": "adjustResize"
+        }
+      }
+    },
+    {
+      "path": "pages/chat/linkman",
+      "style": {
+        "app-plus": {
+          "titleNView": false
+        }
+      }
+    },
+    {
+      "path": "pages/chat/newFriend",
+      "style": {
+        "app-plus": {
+          "titleNView": false
+        }
+      }
+    },
+    {
+      "path": "pages/chat/add",
+      "style": {
+        "app-plus": {
+          "titleNView": false
+        }
+      }
+    },
+    {
+      "path": "pages/chat/createGroup",
+      "style": {
+        "app-plus": {
+          "titleNView": false
+        }
+      }
+    },
+    {
+      "path": "pages/chat/manage",
+      "style": {
+        "app-plus": {
+          "titleNView": false
+        }
+      }
+    },
+    {
+      "path": "pages/chat/groupManage",
+      "style": {
+        "app-plus": {
+          "titleNView": false
+        }
+      }
+    },
+    {
+      "path": "pages/chat/members",
+      "style": {
+        "app-plus": {
+          "titleNView": false
+        }
+      }
+    }
   ],
   "globalStyle": {
     "navigationBarTextStyle": "black",

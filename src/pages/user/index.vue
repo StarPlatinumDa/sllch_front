@@ -53,7 +53,7 @@
       </uni-popup>
     </view>
 
-    <view style="height: 50px;">
+    <view style="height: 100px;">
 
     </view>
 
@@ -80,19 +80,6 @@ export default {
       msgType: 'error',
       showripple: false,
       name: 'xiaomei',
-      // imglist: [{
-      //   'src': '../../static/img/404.png',
-      //   'id': 1
-      // }, {
-      //   'src': '../../static/img/404.png',
-      //   'id': 2
-      // }, {
-      //   'src': '../../static/img/404.png',
-      //   'id': 3
-      // }, {
-      //   'src': '../../static/img/404.png',
-      //   'id': 4
-      // }]
       imglist: []
     }
   },
@@ -106,24 +93,15 @@ export default {
   methods: {
     ...mapMutations(['logout']),
     thisLogout() {
-      // console.log(e)
-      // let x = e.target.x
-      // let y = e.target.y
-      // this.$refs.ripple.style.left = x + 'px'
-      // this.$refs.ripple.style.top = y + 'px'
-      // // console.log(this.$refs.ripple.style.left)
-      // this.showripple = true
-
-      // this.msgType = type
       this.$refs.alertDialog.open()
 
 
     },
     dialogClose() {
-      console.log('点击关闭')
+      // console.log('点击关闭')
     },
     dialogConfirm() {
-      console.log('点击确认')
+      // console.log('点击确认')
       this.logout()
 
       let pages = getCurrentPages();
@@ -131,17 +109,11 @@ export default {
 
       uni.navigateTo({
         url: '/pages/index/index',
-        // success: () => {
-        //   //onshow失灵，所以手动调用
-        //   beforePage.onshow()
-        // }
       })
-      // this.messageText = `点击确认了 ${this.msgType} 窗口`
-      // this.$refs.message.open()
     },
     previewImage(src) {
-      console.log('image')
-      console.log(src)
+      // console.log('image')
+      // console.log(src)
       let array = []
       array.push(src)
       uni.previewImage({
@@ -158,9 +130,9 @@ export default {
             'Authorization': this.token
           },
           success: (res) => {
-            console.log('imgdata')
+            // console.log('imgdata')
             let list = res.data.rows
-            console.log(res.data.rows[0].imageSrc)
+            // console.log(res.data.rows[0].imageSrc)
             this.imglist = []
             for (let i = 0; i < list.length; i++) {
               this.imglist.push({

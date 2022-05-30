@@ -77,8 +77,8 @@ export default {
       this.imagesrc = option.imagesrc;
     else
       this.imagesrc = option.imagesrc.substr(1, n - 2);
-	 this.preImage();
-	this.classificationImage();
+    this.preImage();
+    this.classificationImage();
   },
   methods: {
     toconfirm() {
@@ -113,22 +113,22 @@ export default {
 		}
       })
     },
-	// 图像分类模块
-	classificationImage() {
-		uni.uploadFile({
-		  url: this.classificationUrl + '/classification',
-		  header: {
-		    'Context-Type': "multipart/form-data"
-		  },
-		  filePath: this.imagesrc,
-		  name: "img",
-		  success: (result => {
-		    let data = JSON.parse(result.data)
-		    this.diseasetype = data.label
-		    console.log(data.label)
-		  })
-		})
-	},
+    // 图像分类模块
+    classificationImage() {
+      uni.uploadFile({
+        url: this.classificationUrl + '/classification',
+        header: {
+          'Context-Type': "multipart/form-data"
+        },
+        filePath: this.imagesrc,
+        name: "img",
+        success: (result => {
+          let data = JSON.parse(result.data)
+          this.diseasetype = data.label
+          console.log(data.label)
+        })
+      })
+    },
     previewImage(src) {
       console.log('image')
       console.log(src)

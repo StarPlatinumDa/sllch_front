@@ -103,7 +103,8 @@
 															lastNews: lastNews,
 															groupPhoto: this.frontUrl + '/profile/defaultGroupPhoto.png',
 															chatId: res.data.groupId,
-															ownerId: this.userId
+															ownerId: this.userId,
+															chatObjectPhoto: this.frontUrl + '/profile/defaultGroupPhoto.png'
 														}
 														this.setCurrentChatFrame(currentChatFrame)
 														this.chatFrames.push(currentChatFrame)
