@@ -5,6 +5,7 @@ import Vuex from 'vuex'
 Vue.use(Vuex)
 const store = new Vuex.Store({
     state: {
+        firstLogin: true,//第一次登录
         forcedLogin: true,//是否强制登陆
         hasLogin: false,
         userName: 'xiaomei',
@@ -48,6 +49,7 @@ const store = new Vuex.Store({
             state.userId = '';
             state.token = '';
             state.permissionLevel = '';
+            state.firstLogin = false;
             uni.removeStorage({
                 key: 'token'
             })
@@ -67,9 +69,6 @@ const store = new Vuex.Store({
         setVerifications(state, verifications) {
             state.verifications = verifications;
         },
-        setNews(state, news) {
-            state.news = news;
-        }
     },
     actions: {},
     // getters: {

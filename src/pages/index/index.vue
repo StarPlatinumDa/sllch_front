@@ -50,26 +50,13 @@ export default {
 
     this.account = ''
     this.curpass = ''
-    if (!this.hasLogin) {
+    if (!this.hasLogin && !this.firstLogin) {
       uni.showModal({
         title: '未登录',
         content: '您未登录，需要登陆后才能继续',
         showCancel: !this.forcedLogin,
-        // success: (result => {
-        //   if (result.confirm) {
-        //     if (this.forcedLogin) {
-        //       uni.reLaunch({
-        //         url: '/pages/index/index'
-        //       })
-        //     } else {
-        //       // uni.navigateTo({
-        //       //   url: '/pages/index/index'
-        //       // })
-        //     }
-        //   }
-        // })
       })
-    } else {
+    } else if (this.hasLogin) {
       setTimeout(() => {
         uni.switchTab({
           url: '/pages/user/index'
@@ -79,7 +66,7 @@ export default {
     }
   },
   computed: {
-    ...mapState(['forcedLogin', 'hasLogin', 'userName', 'userId', 'token', 'permissionLevel', 'frontUrl']),
+    ...mapState(['forcedLogin', 'hasLogin', 'userName', 'userId', 'token', 'permissionLevel', 'frontUrl', 'firstLogin']),
     isLogin() {
       let flag = true
       if (this.account && this.curpass) {
@@ -135,7 +122,7 @@ export default {
                   title: res.data.msg,
                   icon: 'none'
                 })
-                resolve()
+                // resolve()
               }
             }
           })
