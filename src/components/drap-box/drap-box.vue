@@ -35,7 +35,7 @@
 					this.showMenu = !this.showMenu
 				},
 				selectChonice: function(list) {
-					console.log(list)
+					console.log(1111)
 					this.option = list.label;
 					this.showMenu = false;
 					this.$emit("returnDat", list.label);

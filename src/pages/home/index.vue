@@ -2,6 +2,8 @@
 	<uni-row class="photograph">
 		<view class="content" @click="tosave">
 			<img id="cameraimage" :src="this.cameraimg">
+			<view
+			style="color: white;font-size: 140%;">拍照识图</view>
 		</view>
 		<button 
 		@click="usealbum"

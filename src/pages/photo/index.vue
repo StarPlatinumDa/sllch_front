@@ -6,7 +6,8 @@
 					<uni-easyinput 
 					prefixIcon="search"
 					@iconClick="searching"
-					v-model="query" 
+					v-model="query"
+					@confirm="searching"
 					placeholder="请输入检索文本" />
 				</uni-col>
 				<uni-col :span="3">
@@ -83,6 +84,9 @@
 				loadingImg:'static/img/loading.gif',
 				defaultType:'病害类型',
 				diseaseType: [{
+				  value: '',
+				  label: '全部类型'
+				},{
 				  value: '脱落',
 				  label: '脱落'
 				}, {
@@ -94,6 +98,9 @@
 				}],
 				defaultLevel: '图片等级',
 				levels: [{
+					value: 0 ,
+					label: '所有可见等级'
+				},{
 					value: 1 ,
 					label: '等级1'
 				},{
@@ -125,6 +132,15 @@
 			...mapState(['userId', 'token', 'frontUrl', 'classificationUrl'])
 		},
 		methods: {
+			formatDate:(date) => {
+			date = new Date(Date.parse(date.replace(/-/g, "/"))); //转换成Data();
+			var y = date.getFullYear();
+			var m = date.getMonth() + 1;
+			m = m < 10 ? '0' + m : m;
+			var d = date.getDate();
+			d = d < 10 ? ('0' + d) : d;
+			return y + '-' + m + '-' + d;
+			},
 			toPictureDetail: function(composingImg) {
 				uni.navigateTo({
 					url:'/pages/photo/imgdetail?imgdtail='+JSON.stringify(composingImg)
@@ -176,7 +192,7 @@
 									imageId: imageinfo[0],
 									imageTypeid: imageinfo[1],
 									imageSrc: imageinfo[2],
-									imageCreatetime: imageinfo[3],
+									imageCreatetime: this.formatDate(imageinfo[3]),
 									imageShotplace: imageinfo[4],
 									imagePerlevel: imageinfo[5],
 									imageRemarks: imageinfo[7],

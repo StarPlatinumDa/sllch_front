@@ -1,9 +1,12 @@
 <template>
   <view>
     <div style="height: 10vh;"></div>
-    <view id="logo">
-      <image id="logo-img" src="../../static/logo2.png"></image>
+    <view class="logo">
+      <image class="logo-img" src="../../static/logo2.png"></image>
     </view>
+	<view class="logo">
+	  <image class="logo-header" src="../../static/img/header.png"></image>
+	</view>
     <div style="height: 10vh;"></div>
     <view id="login">
       <input v-model="account" id="username" class="input-area" placeholder="输入用户名" maxlength=20/>
@@ -166,14 +169,20 @@ export default {
 </script>
 
 <style>
-#logo {
+.logo {
   display: flex;
   justify-content: center;
 }
 
-#logo-img {
+.logo-img {
   width: 60%;
   height: 30vw;
+}
+
+.logo-header{
+	padding: 50rpx 10rpx;
+	width: 85%;
+	height: 30vw;
 }
 
 .input-area {
