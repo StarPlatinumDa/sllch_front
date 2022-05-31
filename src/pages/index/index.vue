@@ -4,6 +4,10 @@
     <view id="logo">
       <image id="logo-img" src="../../static/logo2.png"></image>
     </view>
+
+    <p style="text-align: center;color: red">基于深度学习的混凝土</p>
+    <p style="text-align: center">桥梁表观病害图像分类检索工具</p>
+
     <div style="height: 10vh;"></div>
     <view id="login">
       <input v-model="account" id="username" class="input-area" placeholder="输入用户名" maxlength=20/>
@@ -50,27 +54,13 @@ export default {
 
     this.account = ''
     this.curpass = ''
-    if (!this.hasLogin) {
+    if (!this.hasLogin && !this.firstLogin) {
       uni.showModal({
         title: '未登录',
         content: '您未登录，需要登陆后才能继续',
         showCancel: !this.forcedLogin,
-        // success: (result => {
-        //   if (result.confirm) {
-        //     if (this.forcedLogin) {
-        //       uni.reLaunch({
-        //         url: '/pages/index/index'
-        //       })
-        //     } else {
-        //       // uni.navigateTo({
-        //       //   url: '/pages/index/index'
-        //       // })
-        //     }
-        //   }
-        // })
       })
-    } else {
-      console.log('我服了')
+    } else if (this.hasLogin) {
       setTimeout(() => {
         uni.switchTab({
           url: '/pages/user/index'
@@ -80,7 +70,7 @@ export default {
     }
   },
   computed: {
-    ...mapState(['forcedLogin', 'hasLogin', 'userName', 'userId', 'token', 'permissionLevel', 'frontUrl']),
+    ...mapState(['forcedLogin', 'hasLogin', 'userName', 'userId', 'token', 'permissionLevel', 'frontUrl', 'firstLogin']),
     isLogin() {
       let flag = true
       if (this.account && this.curpass) {
@@ -112,9 +102,9 @@ export default {
             },
             data: temp,
             success: (res) => {
-              console.log(res.data)
+              // console.log(res.data)
               if (res.data.code == 200) {
-                console.log(res.data.token)
+                // console.log(res.data.token)
                 this.msgType = 'success'
                 this.messageText = `登陆成功！`
                 this.$refs.message.open()
@@ -129,14 +119,14 @@ export default {
                   key: 'token',
                   data: res.data.token
                 })
-                console.log('起飞！')
+                // console.log('起飞！')
                 resolve()
               } else {
                 uni.showToast({
                   title: res.data.msg,
                   icon: 'none'
                 })
-                resolve()
+                // resolve()
               }
             }
           })
