@@ -6,7 +6,11 @@
       <br>
       <uni-grid :column="3" :showBorder="false" :square="false">
         <uni-grid-item>
-          <uni-icons type="contact" size="90" color="aqua"></uni-icons>
+          <div style="text-align: right">
+            <img style="height: 90px;width: 90px;border-radius: 15px" :src="headImg[userId%2]">
+          </div>
+          <!--          <uni-icons type="contact" size="90" color="aqua"></uni-icons>-->
+
         </uni-grid-item>
         <uni-grid-item>
           <br>
@@ -80,7 +84,8 @@ export default {
       msgType: 'error',
       showripple: false,
       name: 'xiaomei',
-      imglist: []
+      imglist: [],
+      headImg: ['/static/img/bronebear.jpg', '/static/img/nightwish.jpg']
     }
   },
   onShow() {

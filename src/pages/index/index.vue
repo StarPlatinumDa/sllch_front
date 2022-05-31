@@ -4,6 +4,10 @@
     <view id="logo">
       <image id="logo-img" src="../../static/logo2.png"></image>
     </view>
+
+    <p style="text-align: center;color: red">基于深度学习的混凝土</p>
+    <p style="text-align: center">桥梁表观病害图像分类检索工具</p>
+
     <div style="height: 10vh;"></div>
     <view id="login">
       <input v-model="account" id="username" class="input-area" placeholder="输入用户名" maxlength=20/>
