@@ -34,15 +34,13 @@
 				</uni-col>
 			</uni-row>
 			<uni-row class="demo-uni-row" :gutter="20">
-				<uni-col :span="11">
+				<uni-col :span="24">
 					<view class="example-body">
-						<uni-datetime-picker type="date" :clear-icon="false" v-model="beginTime" />
-					</view>
-				</uni-col>
-				<uni-col :span="2"> — </uni-col>
-				<uni-col :span="11">
-					<view class="example-body">
-						<uni-datetime-picker type="date" :clear-icon="false" v-model="endTime" />
+						<uni-datetime-picker 
+						type="date" 
+						:clear-icon="false" 
+						v-model="beginTime"
+						@change="returnTime"/>
 					</view>
 				</uni-col>
 			</uni-row>
@@ -84,21 +82,21 @@
 				loadingImg:'static/img/loading.gif',
 				defaultType:'病害类型',
 				diseaseType: [{
-				  value: '',
+				  value: '病害类型',
 				  label: '全部类型'
 				},{
-				  value: '脱落',
+				  value: 2,
 				  label: '脱落'
 				}, {
-				  value: '露筋',
+				  value: 3,
 				  label: '露筋'
 				}, {
-				  value: '渗水',
+				  value: 4,
 				  label: '渗水'
 				}],
 				defaultLevel: '图片等级',
 				levels: [{
-					value: 0 ,
+					value: '图片等级' ,
 					label: '所有可见等级'
 				},{
 					value: 1 ,
@@ -113,20 +111,15 @@
 				beginTime:'',
 				endTime:'',
 				composingImgs:[],
-				imagesrc:''
+				imagesrc:'',
+				data:{}
 			}
 		},
 		onShow() {
-			uni.request({
-				url:this.frontUrl + '/imageInfo/imagemanage/list',
-				method:'GET',
-				header: {
-					'Authorization': this.token
-				},
-				success:(res) =>{
-					this.composingImgs = res.data.rows
-				}
-			})
+			this.defaultType = '病害类型',
+			this.defaultLevel = '图片等级',
+			this.beginTime = '',
+			this.getimagebyback();
 		},
 		computed: {
 			...mapState(['userId', 'token', 'frontUrl', 'classificationUrl'])
@@ -141,16 +134,45 @@
 			d = d < 10 ? ('0' + d) : d;
 			return y + '-' + m + '-' + d;
 			},
+			getimagebyback:function(){
+				uni.request({
+					url:this.frontUrl + '/imageInfo/imagemanage/list',
+					data:this.data,
+					method:'GET',
+					header: {
+						'Authorization': this.token
+					},
+					success:(res) =>{
+						this.composingImgs = res.data.rows
+					}
+				})
+			},
 			toPictureDetail: function(composingImg) {
 				uni.navigateTo({
 					url:'/pages/photo/imgdetail?imgdtail='+JSON.stringify(composingImg)
 				})
 			},
+			getimagebycontent(){
+				this.data = {
+					imageTypeid: this.defaultType == '病害类型'? null: this.defaultType,
+					imageCreatetime: this.beginTime,
+					imagePerlevel: this.defaultLevel == '图片等级'? null : this.defaultLevel
+				}
+				console.log(this.data)
+				this.getimagebyback()
+			},
+			returnTime(val){
+				this.beginTime = val;
+				this.getimagebycontent();
+			},
 			returnType(val){
+				console.log(val)
 				this.defaultType = val;
+				this.getimagebycontent();
 			},
 			returnLevel(val){
 				this.defaultLevel = val;
+				this.getimagebycontent();
 			},
 			searching(){
 				let url = this.frontUrl + `/imageInfo/imagemanage/getImageByText/${this.userId}?` +
