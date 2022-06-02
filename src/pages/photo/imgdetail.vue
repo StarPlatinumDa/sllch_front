@@ -60,7 +60,7 @@
 				</uni-row>
 				<uni-row>
 					<uni-col :offset="2">
-						{{this.imgdtail.userId}}
+						{{this.nick_name[this.imgdtail.userId]}}
 					</uni-col>
 				</uni-row>
 			</uni-col>
@@ -99,6 +99,10 @@
 					3:"露筋",
 					4:"渗水",
 					6:"无",
+				},
+				nick_name:{
+					1:'Ouch',
+					100:'Gush'
 				}
 			}
 		},

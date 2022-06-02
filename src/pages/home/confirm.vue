@@ -164,8 +164,9 @@
 					success: (res) => {
 						//上传图片成功添加进数据库
 						let imageurl = JSON.parse(res.data).url;
+						let imageremarks = that.comment;
 						that.fixedLabel[that.damageType].forEach((res)=>{
-							that.comment.push(res);
+							imageremarks.push(res);
 						})
 						uni.request({
 							url: that.frontUrl + '/imageInfo/imagemanage',
@@ -175,7 +176,7 @@
 							},
 							data: {
 								"imagePerlevel": that.level,
-								"imageRemarks": that.comment.join('|'),
+								"imageRemarks": imageremarks.join('|'),
 								"imageShotplace": that.location,
 								"imageSrc": imageurl,
 								"imageIsdelete": 0,

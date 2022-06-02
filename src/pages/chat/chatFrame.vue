@@ -244,7 +244,7 @@ export default {
                     }
                     this.sendMessage(news, () => {
                         let news = {
-                            msg: this.voicePath,
+                            msg: text,
                             fromId: this.userId,
                             toId: this.currentChatFrame.chatId,
                             userId: this.userId,
