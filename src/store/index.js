@@ -22,7 +22,7 @@ const store = new Vuex.Store({
             socketMsgQueue: [],
             timeoutObj: null,
             timeout: 10000,
-            socketUrl: 'ws://192.168.2.6:8001/news',
+            socketUrl: 'http://192.168.137.1:8001/news',
         },
         news: [],
         chatFrames: [],
