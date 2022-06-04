@@ -164,7 +164,8 @@
 					success: (res) => {
 						//上传图片成功添加进数据库
 						let imageurl = JSON.parse(res.data).url;
-						let imageremarks = that.comment;
+						let imageremarks = that.comment.concat();
+						
 						that.fixedLabel[that.damageType].forEach((res)=>{
 							imageremarks.push(res);
 						})
