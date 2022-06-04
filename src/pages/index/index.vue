@@ -2,7 +2,7 @@
   <view>
     <div style="height: 10vh;"></div>
     <view class="logo">
-      <image class="logo-img" src="../../static/logo2.png"></image>
+      <image class="logo-img" src="../../static/logo.png"></image>
     </view>
 	<view class="logo">
 	  <image class="logo-header" src="../../static/img/header.png"></image>
@@ -127,7 +127,10 @@ export default {
                 })
                 // resolve()
               }
-            }
+            },
+			fail(res) {
+				console.log(res)
+			}
           })
 
         }).then((res) => {
@@ -163,7 +166,7 @@ export default {
 
         })
       }
-    }
+    },
   }
 }
 </script>
@@ -175,8 +178,8 @@ export default {
 }
 
 .logo-img {
-  width: 60%;
-  height: 30vw;
+  width: 75%;
+  height: 40vw;
 }
 
 .logo-header{
